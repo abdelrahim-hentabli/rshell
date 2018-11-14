@@ -12,6 +12,7 @@ class Connector : public Base {
     public:
         /* Constructors */
         Connector() : left(nullptr), right(nullptr) {}
+        Connector(char* rep) : Base(rep){};
         Connector(char* rep, Base* l) :
             Base::Base(rep),
             left(l), 

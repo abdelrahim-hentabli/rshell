@@ -28,15 +28,13 @@ bool And::run(){
       return false;
     }
     else if(pid == 0){
-      exit(this->getLeft()->run());
+      this->getLeft()->run();
+      exit(errno);
     }
     else{
       waitpid(pid, &child_status, 0);
-      if(child_status == 1){
-        return this->getRight()->run();
-      }
-      else{
-        return false;        
+      if(WEXITSTATUS(child_status) == 0){
+          return this->getRight()->run();
       }
     }
   }

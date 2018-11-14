@@ -12,12 +12,20 @@ using namespace std;
 int main() {
     Base* head;
     char ls[3]  = "ls";
-    head = new Command(ls);
+    
+    head = new Command("qs");
+    
     head->add(new Argument("-l"));
-    Base* temp = new Or();
+   
+    Base* temp = new And();
+    
     temp->add(head);
     head = temp;
-    temp = new Command(ls);
+    
+    temp = new Command("ls");
+   
     temp->add(new Argument("-a"));
-    std::cout<<head->run();
+    
+    head->add(temp);
+    head->run();
 }

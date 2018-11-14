@@ -25,7 +25,7 @@ bool Command::run(){
   for(int i = 0; i < argumentList.size(); i++){
     argc[i+1] = argumentList.at(i)->getRep();
   }
-  return execvp(argc[0], argc);
+  execvp(argc[0], argc);
 }
 
 #endif

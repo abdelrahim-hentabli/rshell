@@ -12,9 +12,11 @@ class Base {
         /* Constructors */
         Base() {}
         Base(char* rep) { 
-          this->representation = new char[sizeof(rep)];
-          strncpy(this->representation, rep, sizeof(rep) );
+          this->representation = new char[strlen(rep)+ 1];
+          strncpy(this->representation, rep, strlen(rep) + 1 );
+          this->representation[strlen(rep)] = '\0';
           }
+          
         
         /* Accessor function */
         char* getRep() { return this->representation; }

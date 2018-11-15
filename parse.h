@@ -37,7 +37,7 @@ Base* Parse::process() {
         if (takeCommand) {
             char str[token.size() + 1];
             token.copy(str, token.size() + 1);
-            str[token.size()+ 1] = '\0';
+            str[token.size()] = '\0';
             head = new Command(str);
             currentCmnd = head;
             takeCommand = false;

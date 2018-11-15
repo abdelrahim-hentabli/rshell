@@ -27,12 +27,26 @@ Client::Client(){
 
 void Client::run(){
   std::string input;
+  int child_status;
   while(true){
     std::cout << '[' << clientName << '@' << hostName << "]:~$ ";
     getline(std::cin, input);
     parse = Parse(input);
-    head = parse.process();
-    head->run();
+    head = parse.process(); 
+    pid_t pid = fork();
+    if(pid == -1){
+      perror("Fork Failed: ");
+    }
+    else if(pid == 0){
+      head->run();
+    }
+    else{
+      waitpid(pid, &child_status, 0); 
+      //exit was called
+      if(WEXITSTATUS(child_status) == 3){
+        exit(0);
+      }
+    }
   }
 }
 #endif

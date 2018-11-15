@@ -39,6 +39,7 @@ void Client::run(){
     }
     else if(pid == 0){
       head->run();
+      exit(errno);
     }
     else{
       waitpid(pid, &child_status, 0); 

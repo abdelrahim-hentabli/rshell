@@ -11,8 +11,7 @@ public:
     char a[2] = "#";
     setRep(a);
   };
-  Comment(char* rep): Connector(rep){};
-  Comment(char* rep, Base* left): Connector(rep, left){};
+  Comment(Base* left): Connector("#", left){};
   bool run();
 };
 

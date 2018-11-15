@@ -21,11 +21,8 @@ public:
     setRep(a);
   };
 
-  // different representation ctor
-  And(char* rep): Connector(rep){};
-
-  // different representation and initial left hand side
-  And(char* rep, Base* left): Connector(rep, left){};
+  // initial left hand side
+  And(Base* left): Connector("&&", left){};
   
   // run command
   bool run();

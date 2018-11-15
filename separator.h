@@ -11,8 +11,7 @@ public:
     char a[2] = ";";
     setRep(a);
   };
-  Separator(char* rep): Connector(rep){};
-  Separator(char* rep, Base* left): Connector(rep, left){};
+  Separator(Base* left): Connector(";", left){};
   bool run();
 };
 
@@ -36,8 +35,13 @@ bool Separator::run(){
       if(WEXITSTATUS(child_status) == 3){
         exit(3);
       }
-      this->getRight()->run();
-      exit(errno);
+      else if(!getRight()){
+        this->getRight()->run();
+        exit(errno);
+      }
+      else{
+        exit(WEXITSTATUS(child_status));
+      }
     }
   }
 }

@@ -5,10 +5,14 @@
 #include <limits.h>
 
 class Client{
+/* Client
+ * Takes input and passes it to parser
+ */
   char hostName[HOST_NAME_MAX];
   char clientName[LOGIN_NAME_MAX];
 public:
   Client();
+  // Loop taking in input and parsing and running
   void run();
 };
 

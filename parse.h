@@ -44,7 +44,7 @@ Base* Parse::process() {
 
                   currentCmnd = new Command(cstr);
               }
-              head = new Separator(";", currentCmnd);
+              head = new Separator( currentCmnd);
               takeCommand = true;
         } 
         else if (takeCommand) {
@@ -60,7 +60,7 @@ Base* Parse::process() {
         else {
             // Comments (pound character)
             if (token.at(0) == '#') {
-                head = new Comment("#", currentCmnd);
+                head = new Comment(currentCmnd);
                 takeCommand = true;
                 break;
             }
@@ -76,7 +76,7 @@ Base* Parse::process() {
                     Base* temp = new Argument(cstr);
                     currentCmnd->add(temp);
                 }
-                head = new Separator(";", currentCmnd);
+                head = new Separator(currentCmnd);
                 takeCommand = true;
             }
             else if ( token == "&&" ){

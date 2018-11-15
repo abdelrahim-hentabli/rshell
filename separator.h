@@ -11,7 +11,6 @@ public:
     char a[2] = ";";
     setRep(a);
   };
-  Separator(char* rep): Connector(rep){};
   Separator(Base* left): Connector(";", left){};
   bool run();
 };

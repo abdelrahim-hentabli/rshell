@@ -11,7 +11,6 @@ public:
     char a[3] = "||";
     setRep(a);
   };
-  Or(char* rep): Connector(rep){};
   Or(Base* left): Connector("||", left){};
   bool run();
 };

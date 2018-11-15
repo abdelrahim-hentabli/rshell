@@ -25,7 +25,7 @@ public:
   And(char* rep): Connector(rep){};
 
   // different representation and initial left hand side
-  And(char* rep, Base* left): Connector(rep, left){};
+  And(Base* left): Connector("&&", left){};
   
   // run command
   bool run();

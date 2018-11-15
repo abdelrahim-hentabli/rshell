@@ -12,7 +12,7 @@ public:
     setRep(a);
   };
   Separator(char* rep): Connector(rep){};
-  Separator(char* rep, Base* left): Connector(rep, left){};
+  Separator(Base* left): Connector(";", left){};
   bool run();
 };
 

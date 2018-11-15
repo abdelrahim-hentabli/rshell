@@ -6,16 +6,17 @@
 #include <unistd.h>
 
 class Separator: public Connector{
+
 public:
-  Separator(){
-    char a[2] = ";";
-    setRep(a);
-  };
-  Separator(Base* left): Connector(";", left){};
-  bool run();
+    Separator(){
+      char a[2] = ";";
+      setRep(a);
+    };
+    Separator(Base* left): Connector(";", left){};
+    void run();
 };
 
-bool Separator::run(){
+void Separator::run(){
   if(this->getLeft() == nullptr){
     throw("Invalid Tree");
   }
@@ -24,7 +25,6 @@ bool Separator::run(){
     int child_status;
     if(pid == -1){
       perror("Fork Failed:");
-      return false;
     }
     else if(pid == 0){
       this->getLeft()->run();

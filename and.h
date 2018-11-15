@@ -25,11 +25,11 @@ public:
   And(Base* left): Connector("&&", left){};
   
   // run command
-  bool run();
+  void run();
 };
 
 
-bool And::run(){
+void And::run(){
   
   // If a user tries to run an empty and throw an exception
   if(this->getLeft() == nullptr || this->getRight() == nullptr){
@@ -44,7 +44,6 @@ bool And::run(){
     // Pid of -1 is a failure to fork
     if(pid == -1){
       perror("Fork Failed:");
-      return false;
     }
 
     // Child process
@@ -64,7 +63,8 @@ bool And::run(){
       
       // If child ran successfully
       else if(WEXITSTATUS(child_status) == 0){
-          return this->getRight()->run();
+          this->getRight()->run();
+          exit(errno);
       }
 
       // If child was unsuccessful nothing happens

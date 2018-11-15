@@ -42,7 +42,7 @@ class Connector : public Base {
         }
 
         /* Pure Virtual */
-        virtual bool run() = 0;
+        virtual void run() = 0;
 };
 
 

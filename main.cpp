@@ -5,27 +5,32 @@
 #include "or.h"
 #include "argument.h"
 #include "command.h"
+#include "separator.h"
 
 using namespace std;
 
 
 int main() {
     Base* head;
-    char ls[3]  = "ls";
+    try {
+      head = new Command("exit");
     
-    head = new Command("qs");
-    
-    head->add(new Argument("-l"));
-   
-    Base* temp = new And();
-    
-    temp->add(head);
-    head = temp;
-    
-    temp = new Command("ls");
-   
-    temp->add(new Argument("-a"));
-    
-    head->add(temp);
-    head->run();
+      //head->add(new Argument("-l"));
+      Base* temp = new Separator();
+      temp->add(head);
+      head = temp;
+      temp = new Command("qs");
+      temp->add(new Argument("-l")); 
+      head->add(temp);
+      temp = new Or();
+      temp->add(head);
+      head = temp;
+      temp = new Command("ls");
+      temp->add(new Argument("-a")); 
+      head->add(temp);
+      head->run();
+    } catch(int a) {
+      std::cout<<a<<std::endl;
+      return 0;
+    }
 }

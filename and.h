@@ -33,6 +33,9 @@ bool And::run(){
     }
     else{
       waitpid(pid, &child_status, 0);
+      if(WEXITSTATUS(child_status) == 3){
+        exit(3);
+      }
       if(WEXITSTATUS(child_status) == 0){
           return this->getRight()->run();
       }

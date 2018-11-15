@@ -25,7 +25,13 @@ bool Command::run(){
   for(int i = 0; i < argumentList.size(); i++){
     argc[i+1] = argumentList.at(i)->getRep();
   }
-  execvp(argc[0], argc);
+  if(getRep() == "exit"){
+    exit(3);
+  }
+  else{
+    execvp(argc[0], argc);
+    perror("Fail:");
+  }
 }
 
 #endif

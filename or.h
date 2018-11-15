@@ -33,8 +33,12 @@ bool Or::run(){
     }
     else{
       waitpid(pid, &child_status, 0);
-      if(WEXITSTATUS(child_status) == 2){
-          return this->getRight()->run();
+      if(WEXITSTATUS(child_status) == 3){
+        exit(3);
+      }
+      else if(WEXITSTATUS(child_status) == 2){
+          this->getRight()->run();
+          exit(errno);
       }
     }
   }

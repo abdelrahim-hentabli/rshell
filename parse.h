@@ -1,42 +1,80 @@
 #ifndef PARSE_H
 #define PARSE_H
 
-#include <boost/tokenizer.hpp>
 #include <sstream>
 #include <string>
-//#include <cstring>
 #include "base.h"
 #include "command.h"
+#include "argument.h"
+#include "comment.h"
+#include "separator.h"
+#include "and.h"
+#include "or.h"
 
 
 class Parse {
 
     private:
         std::string input;
-        Command* cmnd;
+        Base* head;
+        Base* currentCmnd;
  
     public:
-        Parse(string inpt) : input(inpt) {}
+        Parse(std::string inpt) : input(inpt) {}
         void process();
 };
 
 
 void Parse::process() {
     
-    std::stringstream ss(cmnd);
+    std::stringstream ss(input);
     std::string token;
-    bool isEmpty = true;
+    bool takeCommand = true;
 
     while (ss >> token) {
         // First argument
-        if (isEmpty) {
-            cmnd = new Command(token)
-            isEmpty = false;
+        if (takeCommand) {
+            char str[token.size() + 1];
+            token.copy(str, token.size() + 1);
+            str[token.size()] = '\0';
+
+            head = new Command(str);
+            currentCmnd = head;
+            takeCommand = false;
         // All other arguments
         } else {
-        
+            // Comments (pound character)
+            if (token.at(0) == '#') {
+                head = new Comment("#", currentCmnd);
+                takeCommand = true;
+                break;
+            }
+            // Separator(semi-colon)
+            if (token.at(token.size() - 1) == ';') {
+                // Breaks off string from semi-colon
+                if (token.size() > 1) {
+                    std::string subs = token.substr(0, token.size() - 1);
+                    char cstr[subs.size() + 1];
+                    subs.copy(cstr, subs.size() + 1);
+                    cstr[subs.size()] = '\0';
+
+                    Base* temp = new Argument(cstr);
+                    currentCmnd->add(temp);
+                }
+                head = new Separator(";", currentCmnd);
+                takeCommand = true;
+            }
+            // Arguments
+            else {    
+                char cstr[token.size() + 1];
+                token.copy(cstr, token.size() + 1);
+                cstr[token.size()] = '\0';
+                Base* temp = new Argument(cstr);
+                currentCmnd->add(temp);
+            }
         }
     }
+}
 
     // Don't need this code, c++14 or something:
     /*
@@ -51,7 +89,7 @@ void Parse::process() {
         // All other arguments
         } else {
             if (tok.at(tok.size() - 1) == ';') {
-                Base* a = new Argument(tok.substr(0, tok.size() - 1));
+                Base* a = new Argument(tok.substr(0, tok.size() - 1))
                 Base* b = new Argument(';');
                 cmnd->add(a);
                 cmnd->add(b);
@@ -71,3 +109,6 @@ void Parse::process() {
 
     while(subStr != NULL)
     */
+
+
+#endif

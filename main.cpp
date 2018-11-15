@@ -1,7 +1,7 @@
 #include <iostream>
 #include "base.h"
 #include "connector.h"
-//#include "parse.h"
+#include "parse.h"
 #include "and.h"
 #include "or.h"
 #include "argument.h"
@@ -14,10 +14,10 @@ using namespace std;
 int main() {
 
     Base* head;
-    try {
-      head = new Command("exit");
+      
+      head = new Command("ls");
     
-      //head->add(new Argument("-l"));
+      head->add(new Argument("-l"));
       Base* temp = new Separator();
       temp->add(head);
       head = temp;
@@ -30,11 +30,11 @@ int main() {
       temp = new Command("ls");
       temp->add(new Argument("-a")); 
       head->add(temp);
-      head->run();
-    } catch(int a) {
-      std::cout<<a<<std::endl;
-      return 0;
-    }
 
-    cout << "Sucessfully printing from Main!" << endl;
+
+      cout << "Sucessfully printing from Main!" << endl;
+
+      head->run();
+    
+
 }

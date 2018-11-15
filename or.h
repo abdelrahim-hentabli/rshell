@@ -12,7 +12,7 @@ public:
     setRep(a);
   };
   Or(char* rep): Connector(rep){};
-  Or(char* rep, Base* left): Connector(rep, left){};
+  Or(Base* left): Connector("||", left){};
   bool run();
 };
 

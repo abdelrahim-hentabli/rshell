@@ -1,6 +1,7 @@
 #include <iostream>
 #include "base.h"
 #include "connector.h"
+//#include "parse.h"
 #include "and.h"
 #include "or.h"
 #include "argument.h"
@@ -11,6 +12,7 @@ using namespace std;
 
 
 int main() {
+
     Base* head;
     try {
       head = new Command("exit");
@@ -33,4 +35,6 @@ int main() {
       std::cout<<a<<std::endl;
       return 0;
     }
+
+    cout << "Sucessfully printing from Main!" << endl;
 }

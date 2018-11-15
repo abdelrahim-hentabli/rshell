@@ -34,20 +34,7 @@ Base* Parse::process() {
 
     while (ss >> token) {
         // First argument
-        if (takeCommand && token.at(token.size() - 1) == ';') {
-            // Breaks off string from semi-colon
-            if (token.size() > 1) {
-                  std::string subs = token.substr(0, token.size() - 1);
-                  char cstr[subs.size() + 1];
-                  subs.copy(cstr, subs.size() + 1);
-                  cstr[subs.size()] = '\0';
-
-                  currentCmnd = new Command(cstr);
-              }
-              head = new Separator(";", currentCmnd);
-              takeCommand = true;
-        } 
-        else if (takeCommand) {
+        if (takeCommand) {
             char str[token.size() + 1];
             token.copy(str, token.size() + 1);
             str[token.size()] = '\0';
@@ -60,8 +47,8 @@ Base* Parse::process() {
         else {
             // Comments (pound character)
             if (token.at(0) == '#') {
-                head = new Comment("#", currentCmnd);
-                takeCommand = true;
+                head = new Comment(head);                   // Pass old head,
+                takeCommand = true;                         // then set new head
                 break;
             }
             // Separator(semi-colon)
@@ -76,17 +63,16 @@ Base* Parse::process() {
                     Base* temp = new Argument(cstr);
                     currentCmnd->add(temp);
                 }
-                head = new Separator(";", currentCmnd);
-                takeCommand = true;
+                head = new Separator(head);                 // Pass old head,
+                takeCommand = true;                         // then set new head
             }
-            else if ( token == "&&" ){
-              
-
-
+            else if (token == "&&") { 
+                head = new And(head);                       // Pass old head,
+                takeCommand = true;                         // then set new head 
             }
-            else if ( token == "||" ){
-
-
+            else if (token == "||") {
+                head = new Or(head);                        // Pass old head,
+                takeCommand = true;                         // then set new head
             }
             // Arguments
             else {    

@@ -36,8 +36,13 @@ bool Separator::run(){
       if(WEXITSTATUS(child_status) == 3){
         exit(3);
       }
-      this->getRight()->run();
-      exit(errno);
+      else if(!getRight()){
+        this->getRight()->run();
+        exit(errno);
+      }
+      else{
+        exit(WEXITSTATUS(child_status));
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
 #ifndef BASE_H
 #define BASE_H
 
+#include <string.h>
 
 class Base {
 
@@ -10,7 +11,10 @@ class Base {
     public:
         /* Constructors */
         Base() {}
-        Base(char* rep) { this->representation = rep; }
+        Base(char* rep) { 
+          this->representation = new char[sizeof(rep)];
+          strncpy(this->representation, rep, sizeof(rep) );
+          }
         
         /* Accessor function */
         char* getRep() { return this->representation; }

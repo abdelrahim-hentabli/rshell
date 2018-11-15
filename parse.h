@@ -20,12 +20,13 @@ class Parse {
         Base* currentCmnd;
  
     public:
+        Parse(){};
         Parse(std::string inpt) : input(inpt) {}
-        void process();
+        Base* process();
 };
 
 
-void Parse::process() {
+Base* Parse::process() {
     
     std::stringstream ss(input);
     std::string token;
@@ -36,11 +37,11 @@ void Parse::process() {
         if (takeCommand) {
             char str[token.size() + 1];
             token.copy(str, token.size() + 1);
-            str[token.size()] = '\0';
-
+            str[token.size()+ 1] = '\0';
             head = new Command(str);
             currentCmnd = head;
             takeCommand = false;
+
         // All other arguments
         } else {
             // Comments (pound character)
@@ -74,6 +75,7 @@ void Parse::process() {
             }
         }
     }
+    return head;
 }
 
     // Don't need this code, c++14 or something:

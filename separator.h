@@ -17,7 +17,7 @@ public:
 };
 
 bool Separator::run(){
-  if(this->getLeft() == nullptr || this->getRight() == nullptr){
+  if(this->getLeft() == nullptr){
     throw("Invalid Tree");
   }
   else{

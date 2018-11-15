@@ -34,7 +34,20 @@ Base* Parse::process() {
 
     while (ss >> token) {
         // First argument
-        if (takeCommand) {
+        if (takeCommand && token.at(token.size() - 1) == ';') {
+            // Breaks off string from semi-colon
+            if (token.size() > 1) {
+                  std::string subs = token.substr(0, token.size() - 1);
+                  char cstr[subs.size() + 1];
+                  subs.copy(cstr, subs.size() + 1);
+                  cstr[subs.size()] = '\0';
+
+                  currentCmnd = new Command(cstr);
+              }
+              head = new Separator(";", currentCmnd);
+              takeCommand = true;
+        } 
+        else if (takeCommand) {
             char str[token.size() + 1];
             token.copy(str, token.size() + 1);
             str[token.size()] = '\0';
@@ -43,7 +56,8 @@ Base* Parse::process() {
             takeCommand = false;
 
         // All other arguments
-        } else {
+        } 
+        else {
             // Comments (pound character)
             if (token.at(0) == '#') {
                 head = new Comment("#", currentCmnd);
@@ -51,7 +65,7 @@ Base* Parse::process() {
                 break;
             }
             // Separator(semi-colon)
-            if (token.at(token.size() - 1) == ';') {
+            else if (token.at(token.size() - 1) == ';') {
                 // Breaks off string from semi-colon
                 if (token.size() > 1) {
                     std::string subs = token.substr(0, token.size() - 1);
@@ -64,6 +78,15 @@ Base* Parse::process() {
                 }
                 head = new Separator(";", currentCmnd);
                 takeCommand = true;
+            }
+            else if ( token == "&&" ){
+              
+
+
+            }
+            else if ( token == "||" ){
+
+
             }
             // Arguments
             else {    

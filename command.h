@@ -19,11 +19,11 @@ class Command: public Base{
 };
 
 bool Command::run(){
-  char* argc[argumentList.size() + 2 ];
-  argc[argumentList.size() + 1] = nullptr;
-  argc[0] = getRep();
+  char* argc [argumentList.size() + 2];
+  argc [argumentList.size() + 1] = nullptr;
+  argc [0] = getRep();
   for(int i = 0; i < argumentList.size(); i++){
-    argc[i+1] = argumentList.at(i)->getRep();
+    argc[i + 1] = argumentList.at(i)->getRep();
   }
   if(getRep() == "exit"){
     exit(3);

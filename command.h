@@ -19,12 +19,19 @@ class Command: public Base{
 };
 
 bool Command::run(){
-  char* argc[argumentList.size() + 1 ];
+  char* argc[argumentList.size() + 2 ];
+  argc[argumentList.size() + 1] = nullptr;
   argc[0] = getRep();
   for(int i = 0; i < argumentList.size(); i++){
     argc[i+1] = argumentList.at(i)->getRep();
   }
-  execvp(getRep(), argc);
+  if(getRep() == "exit"){
+    exit(3);
+  }
+  else{
+    execvp(argc[0], argc);
+    perror("Fail:");
+  }
 }
 
 #endif

@@ -21,6 +21,7 @@ public:
 };
 
 Client::Client(){
+  //get hostname and login name
   gethostname(hostName, HOST_NAME_MAX);
   getlogin_r(clientName, LOGIN_NAME_MAX);
   parse = Parse("");
@@ -32,7 +33,6 @@ void Client::run(){
   while(true){
     std::cout << '[' << clientName << '@' << hostName << "]:~$ ";
     getline(std::cin, input);
-    //parse = Parse(input);
     parse.setInput(input);
     head = parse.process(); 
     pid_t pid = fork();

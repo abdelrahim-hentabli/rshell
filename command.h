@@ -12,12 +12,19 @@ class Command: public Base{
     std::vector<Base*> argumentList;
 
   public:
+    /* Constructors */
     Command():Base(){};
     Command( char* repr ):Base(repr){};
+    /* Processor */
     void run();
-
-    //add arguments
+    /* Mutator */
     void add( Base* argument ){ argumentList.push_back(argument); };
+    /* Destructor */
+    ~Command() {
+        for (auto basePtr : argumentList)
+            if (basePtr != nullptr)
+                delete basePtr;
+    }
 };
 
 void Command::run(){

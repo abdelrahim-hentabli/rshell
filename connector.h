@@ -12,15 +12,55 @@ class Connector : public Base {
     public:
         /* Constructors */
         Connector() : left(nullptr), right(nullptr) {}
+        
         Connector(char* rep) : Base(rep){
           left = nullptr;
           right = nullptr;
         };
+        
         Connector(char* rep, Base* l) :
             Base::Base(rep),
             left(l), 
             right(nullptr)
-            {}
+         {}
+        
+        /*
+        Connector(const Connector& RHS){
+          left = copy(RHS.left);
+          right = copy(RHS.right);
+        }
+        */
+        
+
+        /* Assignment Operator */
+        /*
+        Connector& operator =(const Connector& RHS){
+          if (left){
+            delete left;
+          }
+          if (right){
+            delete right;
+          }
+          left = copy(RHS.left);
+          right = copy(RHS.right);
+
+          return this;
+        }
+        */
+
+
+        /* Destructor */
+        /*
+        ~Connector(){
+          if (left){
+            delete left;
+          }
+          else if(right){
+            delete right;
+          }
+        }
+        */
+
 
         /* Accessors */
         Base* getLeft() { return this->left; }
@@ -39,6 +79,11 @@ class Connector : public Base {
                 setLeft(obj);
             else if (this->right == nullptr)
                 setRight(obj);
+        }
+
+        Base* copy(){
+                    
+
         }
 
         /* Pure Virtual */

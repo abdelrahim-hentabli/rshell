@@ -13,33 +13,43 @@ class Command: public Base{
 
   public:
     /* Constructors */
-    Command() : Base() {};
-    Command(char* repr) : Base(repr){};
-    /* Copy Constructor */
-    /*
-    Command(const Command RHS) {
-        for (auto basePtr : RHS.argumentList) {
-            Base* temp = new Argument()
-                // YOU'RE NOT DONE
-            this->argumentList.push_back(temp);
-        }
-    }
-    */
+    Command():Base(){};
+    Command( char* repr ):Base(repr){};
+    /* Processor */
     void run();
-    void add(Base* argument) { argumentList.push_back(argument); };
+    /* Mutator */
+    void add( Base* argument ){ argumentList.push_back(argument); };
+    /* Destructor */
+    ~Command() {
+        for (auto basePtr : argumentList)
+            if (basePtr != nullptr)
+                delete basePtr;
+    }
 };
 
 
 void Command::run(){
+  
+  //array argc contains representation and all arguments as well as a nullptr
   char* argc [argumentList.size() + 2];
+  
+  //nullptr terminated array
   argc [argumentList.size() + 1] = nullptr;
+
+  //first index is command name
   argc [0] = getRep();
-  for(int i = 0; i < argumentList.size(); i++){
+
+  //adding following indexes are arguments
+  for (int i = 0; i < argumentList.size(); i++){
     argc[i + 1] = argumentList.at(i)->getRep();
   }
-  if(std::string(getRep()) == "exit"){
+  
+  //if command is exit
+  if (std::string(getRep()) == "exit"){
     exit(3);
   }
+
+  //otherwise run execvp
   else{
     execvp(argc[0], argc);
     perror("Fail:");

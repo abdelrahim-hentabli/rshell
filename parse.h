@@ -20,12 +20,24 @@ private:
     Base* currentCmnd;
  
 public:
+    /* Constructors */
     Parse() {}
     Parse(std::string inpt) 
         : input(inpt), head(nullptr), currentCmnd(nullptr) {}
+    /* Helper Function */
     char* cStringConv(std::string text);
-    void setInput(std::string inpt) { this->input = inpt; }
+    /* Mutators */
+    void setInput(std::string inpt) { 
+        this->input = inpt;
+        if (head != nullptr) {
+            delete head;
+            head = nullptr;
+        }
+        currentCmnd = nullptr;
+    }
     Base* process();
+    /* Destructor */
+    ~Parse() { if (head != nullptr) delete head; }
 };
 
 

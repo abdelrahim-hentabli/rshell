@@ -16,20 +16,21 @@ public:
 };
 
 void Or::run(){
-  if(this->getLeft() == nullptr || this->getRight() == nullptr){
-    throw("Invalid Tree");
+  //exit if invalid tree
+  if (this->getLeft() == nullptr || this->getRight() == nullptr){
+    exit(4);
   }
   else{
     pid_t pid = fork();
     int child_status;
     
     //fork failed
-    if(pid == -1){
+    if (pid == -1){
       perror("Fork Failed:");
     }
 
     //child
-    else if(pid == 0){
+    else if (pid == 0){
       this->getLeft()->run();
       exit(errno);
     }
@@ -39,14 +40,19 @@ void Or::run(){
       waitpid(pid, &child_status, 0);
       
       //exit was called in child
-      if(WEXITSTATUS(child_status) == 3){
+      if (WEXITSTATUS(child_status) == 3){
         exit(3);
       }
 
       //child failed
-      else if(WEXITSTATUS(child_status) == 2){
+      else if (WEXITSTATUS(child_status) == 2){
           this->getRight()->run();
           exit(errno);
+      }
+
+      //child passed
+      else{
+        exit(errno);
       }
     }
   }

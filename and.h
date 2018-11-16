@@ -32,8 +32,8 @@ public:
 void And::run(){
   
   // If a user tries to run an empty and throw an exception
-  if(this->getLeft() == nullptr || this->getRight() == nullptr){
-    throw("Invalid Tree");
+  if (this->getLeft() == nullptr || this->getRight() == nullptr){
+    exit(4);
   }
   
   // It is a valid tree
@@ -42,12 +42,12 @@ void And::run(){
     int child_status;
 
     // Pid of -1 is a failure to fork
-    if(pid == -1){
+    if (pid == -1){
       perror("Fork Failed:");
     }
 
     // Child process
-    else if(pid == 0){
+    else if (pid == 0){
       this->getLeft()->run();
       exit(errno);
     }
@@ -57,17 +57,20 @@ void And::run(){
       waitpid(pid, &child_status, 0);
       
       // If exit was called in a child
-      if(WEXITSTATUS(child_status) == 3){
+      if (WEXITSTATUS(child_status) == 3){
         exit(3);
       }
       
       // If child ran successfully
-      else if(WEXITSTATUS(child_status) == 0){
+      else if (WEXITSTATUS(child_status) == 0){
           this->getRight()->run();
           exit(errno);
       }
 
       // If child was unsuccessful nothing happens
+      else if (WEXITSTATUS(child_status) != 2){
+          exit(errno);
+      }
     }
   }
 }

@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include "parse.h"
+#include <iostream>
 
 class Client{
 /* Client
@@ -31,6 +32,7 @@ void Client::run(){
   while(true){
     std::cout << '[' << clientName << '@' << hostName << "]:~$ ";
     getline(std::cin, input);
+    //parse.setInput(input);
     parse = Parse(input);
     head = parse.process(); 
     pid_t pid = fork();
@@ -47,7 +49,12 @@ void Client::run(){
       if(WEXITSTATUS(child_status) == 3){
         exit(0);
       }
+      else if(WEXITSTATUS(child_status) == 4){
+        std::cout<<"Invalid Tree"<<std::endl;
+        exit(4);
+      }
     }
   }
 }
+
 #endif

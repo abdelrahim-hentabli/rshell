@@ -16,17 +16,26 @@ public:
 };
 
 void Comment::run(){
-  if(this->getLeft() == nullptr){
-    throw("Invalid Tree");
+  //exit if invalid tree
+  if (this->getLeft() == nullptr){
+    exit(4);
   }
   else{
     pid_t pid = fork();
     int child_status;
-    if(pid == -1){
+    //fork failed;
+    if (pid == -1){
       perror("Fork Failed:");
     }
-    else if(pid == 0){
+
+    //child
+    else if (pid == 0){
       this->getLeft()->run();
+      exit(errno);
+    }
+
+    //parent
+    else{
       exit(errno);
     }
   }

@@ -14,20 +14,23 @@
 
 class Parse {
 
-    private:
-        std::string input;
-        Base* head;
-        Base* currentCmnd;
-        char* cStringConv(std::string text);
+private:
+    std::string input;
+    Base* head;
+    Base* currentCmnd;
  
-    public:
-        Parse() {}
-        Parse(std::string inpt) 
-            : input(inpt), head(nullptr), currentCmnd(nullptr) {}
-        Base* process();
+public:
+    Parse() {}
+    Parse(std::string inpt) 
+        : input(inpt), head(nullptr), currentCmnd(nullptr) {}
+    char* cStringConv(std::string text);
+    void setInput(std::string inpt) { this->input = inpt; }
+    Base* process();
 };
 
-// Private Helper Function
+
+// Public Member Functions
+
 char* Parse::cStringConv(std::string text) {
     char* cStr = new char[text.size() + 1];
     text.copy(cStr, text.size() + 1);
@@ -35,8 +38,6 @@ char* Parse::cStringConv(std::string text) {
     return cStr;
 }
 
-
-// Public Member Function
 Base* Parse::process() {
     std::stringstream ss(input);
     std::string token;
@@ -45,15 +46,30 @@ Base* Parse::process() {
     while (ss >> token) {
         // Commands
         if (takeCommand) {
-            char* c = cStringConv(token);
-            currentCmnd = new Command(c);
-            takeCommand = false;
-            // First Command
-            if (head == nullptr)
-                head = currentCmnd;
-            // Additional Command(s)
-            else
-                head->add(currentCmnd);
+            // Commands with Separator (';') appended
+            if (token.at(token.size() - 1) == ';') {
+                std::string subString = token.substr(0, token.size() - 1);
+                currentCmnd = new Command(cStringConv(subString));
+                // First Command (with Separator)
+                if (head == nullptr)
+                    head = new Separator(currentCmnd);
+                // Additional Commands (with Seperator)
+                else {
+                    head->add(currentCmnd);
+                    head = new Separator(head);
+                }
+            }
+            // Commands without Separator
+            else {
+                currentCmnd = new Command(cStringConv(token));
+                takeCommand = false;
+                // First Command
+                if (head == nullptr)
+                    head = currentCmnd;
+                // All other Commands
+                else
+                    head->add(currentCmnd);
+            }
         } 
         // Comments (pound character)
         else if (token.at(0) == '#') {

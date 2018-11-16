@@ -44,7 +44,7 @@ void Separator::run(){
       }
       
       //if the right side has a command run it
-      else if(!getRight()){
+      else if(getRight()){
         this->getRight()->run();
         exit(errno);
       }

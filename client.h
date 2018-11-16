@@ -32,8 +32,8 @@ void Client::run(){
   while(true){
     std::cout << '[' << clientName << '@' << hostName << "]:~$ ";
     getline(std::cin, input);
-    //parse.setInput(input);
-    parse = Parse(input);
+    //parse = Parse(input);
+    parse.setInput(input);
     head = parse.process(); 
     pid_t pid = fork();
     if(pid == -1){

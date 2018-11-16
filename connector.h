@@ -50,7 +50,6 @@ class Connector : public Base {
 
 
         /* Destructor */
-        /*
         ~Connector(){
           if (left){
             delete left;
@@ -59,7 +58,7 @@ class Connector : public Base {
             delete right;
           }
         }
-        */
+        
 
 
         /* Accessors */

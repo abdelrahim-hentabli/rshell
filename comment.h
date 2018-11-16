@@ -36,7 +36,18 @@ void Comment::run(){
 
     //parent
     else{
-      exit(errno);
+      waitpid(pid, &child_status, 0);
+      
+      //exit was called in child
+      if (WEXITSTATUS(child_status) == 3){
+        exit(3);
+      }
+
+      //child failed
+      else{
+        exit(WEXITSTATUS(child_status));
+      }
+    
     }
   }
 }

@@ -12,29 +12,38 @@ public:
     setRep(a);
   };
   Or(Base* left): Connector("||", left){};
-  bool run();
+  void run();
 };
 
-bool Or::run(){
+void Or::run(){
   if(this->getLeft() == nullptr || this->getRight() == nullptr){
     throw("Invalid Tree");
   }
   else{
     pid_t pid = fork();
     int child_status;
+    
+    //fork failed
     if(pid == -1){
       perror("Fork Failed:");
-      return false;
     }
+
+    //child
     else if(pid == 0){
       this->getLeft()->run();
       exit(errno);
     }
+
+    //parent
     else{
       waitpid(pid, &child_status, 0);
+      
+      //exit was called in child
       if(WEXITSTATUS(child_status) == 3){
         exit(3);
       }
+
+      //child failed
       else if(WEXITSTATUS(child_status) == 2){
           this->getRight()->run();
           exit(errno);

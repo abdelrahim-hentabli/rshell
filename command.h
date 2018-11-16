@@ -14,11 +14,11 @@ class Command: public Base{
   public:
     Command():Base(){};
     Command( char* repr ):Base(repr){};
-    bool run();
+    void run();
     void add( Base* argument ){ argumentList.push_back(argument); };
 };
 
-bool Command::run(){
+void Command::run(){
   char* argc [argumentList.size() + 2];
   argc [argumentList.size() + 1] = nullptr;
   argc [0] = getRep();

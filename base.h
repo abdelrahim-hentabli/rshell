@@ -25,7 +25,7 @@ class Base {
         void setRep(char* rep) { this->representation = rep; }
 
         /* Pure Virtual functions */
-        virtual bool run() = 0;
+        virtual void run() = 0;
         virtual void add(Base* obj) = 0;
 };
 

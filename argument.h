@@ -13,7 +13,7 @@ class Argument: public Base{
     Argument(char* repr):Base(repr){};
     
     //empty functions no functionality for argument
-    bool run(){};
+    void run(){};
     void add(Base*){};
 };
 

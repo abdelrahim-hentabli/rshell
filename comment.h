@@ -12,10 +12,10 @@ public:
     setRep(a);
   };
   Comment(Base* left): Connector("#", left){};
-  bool run();
+  void run();
 };
 
-bool Comment::run(){
+void Comment::run(){
   if(this->getLeft() == nullptr){
     throw("Invalid Tree");
   }
@@ -24,7 +24,6 @@ bool Comment::run(){
     int child_status;
     if(pid == -1){
       perror("Fork Failed:");
-      return false;
     }
     else if(pid == 0){
       this->getLeft()->run();

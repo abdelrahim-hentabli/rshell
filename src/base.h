@@ -31,7 +31,8 @@ class Base {
         }
         
         
-        ~Base(){
+        virtual ~Base(){
+          std::cout<<"in Base Destructor"<<std::endl;
           delete[] representation;
         }
         

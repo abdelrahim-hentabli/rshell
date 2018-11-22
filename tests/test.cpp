@@ -1,5 +1,6 @@
 #include "testcommand.h"
-
+#include "testparse.h"
+#include "testconnector.h"
 #include "gtest/gtest.h"
 
 TEST(TEST_VALID_COMMAND, ls){
@@ -28,6 +29,10 @@ TEST(TEST_VALID_COMMAND_WITH_EMPTY_ARGUMENT, LS_){
 
 TEST(TEST_INVALID_COMMAND_WITH_ARGUMENT, QS_A){
   EXPECT_EQ(2, test_invalid_command_with_argument());
+}
+
+TEST(TEST_VALID_PARSE, LS){
+  EXPECT_EQ(0, test_valid_parse());
 }
 
 int main(int argc, char **argv){

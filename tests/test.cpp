@@ -45,7 +45,7 @@ TEST(OR, QS_OR_EXIT){
   EXPECT_EQ(3, test_qs_or_exit());
 }
 
-TEST(OR, EXIT_or_LS){
+TEST(OR, EXIT_OR_LS){
   EXPECT_EQ(3, test_exit_or_ls());
 }
 
@@ -55,6 +55,28 @@ TEST(OR, EQIT_OR_LS){
 
 TEST(OR, EQIT_OR_QS){
   EXPECT_EQ(2, test_eqit_or_qs());
+}
+
+
+//And Test
+TEST(AND, LS_AND_EXIT){
+  EXPECT_EQ(3, test_ls_and_exit());
+}
+
+TEST(AND, QS_AND_EXIT){
+  EXPECT_EQ(2, test_qs_and_exit());
+}
+
+TEST(AND, EXIT_AND_LS){
+  EXPECT_EQ(3, test_exit_and_ls());
+}
+
+TEST(AND, EQIT_AND_LS){
+  EXPECT_EQ(2, test_eqit_and_ls());
+}
+
+TEST(AND, EQIT_AND_QS){
+  EXPECT_EQ(2, test_eqit_and_qs());
 }
 
 

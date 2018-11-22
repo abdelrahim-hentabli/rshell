@@ -6,29 +6,33 @@
 #include <unistd.h>
 
 
-
 class And: public Connector{
 /* And Connector (&&)
  * Runs the left side, and if it passes, runs the right as well
  */
 
 public:
-  
-  // default ctor
-  And(){
-    // sets the representation to '&&'
-    char a[3] = "&&";
-    setRep(a);
-  };
-
-  // initial left hand side
-  And(Base* left): Connector("&&", left){};
-  
-  // run command
+  /* Constructors */
+  And() : Connector("&&") {}
+  And(Base* left): Connector("&&", left){};     // Initial left hand side
+  /* Copy Constructor */
+  And(const And& RHS) : Connector(dynamic_cast<const Connector&>(RHS)) {}
+  /* Assignment Operator */
+  And& operator= (And RHS) {
+      swap(*this, RHS);
+      return *this;
+  }
+  /* Processor */
   void run();
+  /* Destructor */
+  ~And() = default;
+
+  /* Friend Function */
+  friend void swap(And& a, And& b);
 };
 
 
+/* Member Function */
 void And::run(){
   
   // If a user tries to run an empty and throw an exception
@@ -74,5 +78,12 @@ void And::run(){
     }
   }
 }
+
+
+/* Non-member Function */
+void swap(And& a, And& b) {
+  swap(dynamic_cast<Connector&>(a), dynamic_cast<Connector&>(b));
+}
+
 
 #endif

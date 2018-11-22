@@ -5,16 +5,30 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+
 class Comment: public Connector{
+
 public:
-  Comment(){
-    char a[2] = "#";
-    setRep(a);
-  };
-  Comment(Base* left): Connector("#", left){};
+  /* Constructors */
+  Comment() : Connector("#") {}
+  Comment(Base* left): Connector("#", left) {}
+  /* Copy Constructor */
+  Comment(const Comment& RHS) : Connector(dynamic_cast<const Connector&>(RHS)) {}
+  /* Assignment Operator */
+  Comment& operator= (Comment RHS) {
+      swap(*this, RHS);
+      return *this;
+  }
+  /* Processor */
   void run();
+  /* Destructor */
+  ~Comment() = default;
+
+  /* Friend Function */
+  friend void swap(Comment& a, Comment& b);
 };
 
+/* Member Function */
 void Comment::run(){
   //exit if invalid tree
   if (this->getLeft() == nullptr){
@@ -47,9 +61,14 @@ void Comment::run(){
       else{
         exit(WEXITSTATUS(child_status));
       }
-    
     }
   }
 }
+
+/* Non-member Functions */
+void swap(Comment& a, Comment& b) {
+    swap(dynamic_cast<Connector&>(a), dynamic_cast<Connector&>(b));
+}
+
 
 #endif

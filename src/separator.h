@@ -5,17 +5,30 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+
 class Separator: public Connector{
 
 public:
-    Separator(){
-      char a[2] = ";";
-      setRep(a);
-    };
-    Separator(Base* left): Connector(";", left){};
+    /* Constructors */
+    Separator() : Connector(";") {}
+    Separator(Base* left): Connector(";", left) {}
+    /* Copy Constructor */
+    Separator(const Separator& RHS) : Connector(dynamic_cast<const Connector&>(RHS)) {}
+    /* Assignment Operator */
+    Separator& operator= (Separator RHS) {
+        swap(*this, RHS);
+        return *this;
+    }
+    /* Processor */
     void run();
+    /* Destructor */
+    ~Separator() = default;
+
+    /* Friend Function */
+    friend void swap(Separator& a, Separator& b);
 };
 
+/* Member Function */
 void Separator::run(){
   if(this->getLeft() == nullptr){
     exit(4);
@@ -56,5 +69,11 @@ void Separator::run(){
     }
   }
 }
+
+/* Non-member Function */
+void swap(Separator& a, Separator& b) {
+    swap(dynamic_cast<Connector&>(a), dynamic_cast<Connector&>(b));
+}
+
 
 #endif

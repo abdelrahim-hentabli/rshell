@@ -37,7 +37,7 @@ public:
       return *this;
     }  
     /* Accessor function */
-    char* getRep() { return this->representation; }
+    char* getRep() const { return this->representation; }
     /* Mutator function */
     void setRep(char* rep) { this->representation = rep; }
     /* Pure Virtual functions */

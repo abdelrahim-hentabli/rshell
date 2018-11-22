@@ -1,4 +1,4 @@
-#include "commandtest.h"
+#include "testcommand.h"
 
 #include "gtest/gtest.h"
 
@@ -18,6 +18,11 @@ TEST(TEST_EXIT_COMMAND, EXIT){
   EXPECT_EQ(3, test_exit_command());
 }
 
-TEST(TEST_VALID_COMMAND_WITH_ARGUMENT, LS-A){
-  EXPECT_EQ(0, test_valid_command_with_argument);
+TEST(TEST_VALID_COMMAND_WITH_ARGUMENT, LS_A){
+  EXPECT_EQ(0, test_valid_command_with_argument());
+}
+
+int main(int argc, char **argv){
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

@@ -54,6 +54,7 @@ int test_empty_command(){
 
   if(pid == 0){
     head->run();
+    exit(errno);
   }
   else{
     waitpid(pid,&exitVal,0);
@@ -71,6 +72,7 @@ int test_exit_command(){
 
   if(pid == 0){
     head->run();
+    exit(errno);
   }
   else{
     waitpid(pid,&exitVal,0);
@@ -87,6 +89,24 @@ int test_valid_command_with_argument(){
 
   if(pid == 0){
     head->run();
+    exit(errno);
+  }
+  else{
+    waitpid(pid,&exitVal,0);
+    delete head;
+  }
+  return WEXITSTATUS(exitVal);
+}
+
+int test_valid_command_with_empty_argument(){
+  Base* head = new Command("ls");
+  head->add(new Argument(""));
+  int exitVal = 0;
+  pid_t pid = fork();
+
+  if(pid == 0){
+    head->run();
+    exit(errno);
   }
   else{
     waitpid(pid,&exitVal,0);
@@ -103,6 +123,7 @@ int test_invalid_command_with_argument(){
 
   if(pid == 0){
     head->run();
+    exit(errno);
   }
   else{
     waitpid(pid,&exitVal,0);

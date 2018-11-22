@@ -79,7 +79,39 @@ TEST(AND, EQIT_AND_QS){
   EXPECT_EQ(2, test_eqit_and_qs());
 }
 
+//And Test
+TEST(SEPARATOR, LS_SEP_EXIT){
+  EXPECT_EQ(3, test_ls_sep_exit());
+}
 
+TEST(SEPARATOR, QS_SEP_EXIT){
+  EXPECT_EQ(3, test_qs_sep_exit());
+}
+
+TEST(SEPARATOR, EXIT_SEP_LS){
+  EXPECT_EQ(3, test_exit_sep_ls());
+}
+
+TEST(SEPARATOR, EQIT_SEP_LS){
+  EXPECT_EQ(0, test_eqit_sep_ls());
+}
+
+TEST(SEPARATOR, EQIT_SEP_QS){
+  EXPECT_EQ(2, test_eqit_sep_qs());
+}
+
+//Comment Test
+TEST(COMMENT, EXIT_COMMENT){
+  EXPECT_EQ(3, test_exit_comment());
+}
+
+TEST(COMMENT, LS_COMMENT){
+  EXPECT_EQ(0, test_ls_comment());
+}
+
+TEST(COMMENT, QS_COMMENT){
+  EXPECT_EQ(2, test_qs_comment());
+}
 
 int main(int argc, char **argv){
   ::testing::InitGoogleTest(&argc, argv);

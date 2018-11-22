@@ -1,5 +1,6 @@
 #include "testcommand.h"
 #include "testconnector.h"
+#include "testparse.h"
 #include "gtest/gtest.h"
 
 
@@ -55,6 +56,31 @@ TEST(OR, EQIT_OR_LS){
 
 TEST(OR, EQIT_OR_QS){
   EXPECT_EQ(2, test_eqit_or_qs());
+}
+
+/*Parse Tests*/
+TEST(TEST_VALID_PARSE, ls){
+  EXPECT_EQ(0, test_valid_parse());
+}
+
+TEST(TEST_INVALID_PARSE, qs){
+  EXPECT_EQ(2, test_invalid_parse());
+}
+
+TEST(TEST_EXIT_PARSE, EXIT){
+  EXPECT_EQ(3, test_exit_parse());
+}
+
+TEST(TEST_VALID_PARSE_WITH_ARGUMENT, LS_A){
+  EXPECT_EQ(0, test_valid_parse_with_arg());
+}
+
+TEST(TEST_VALID_PARSE_WITH_EMPTY_ARGUMENT, LS_){
+  EXPECT_EQ(0, test_valid_parse_with_empty_arg());
+}
+
+TEST(TEST_INVALID_PARSE_WITH_ARGUMENT, QS_A){
+  EXPECT_EQ(2, test_invalid_parse_with_arg());
 }
 
 

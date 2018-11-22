@@ -84,6 +84,8 @@ int test_exit_command(){
 int test_valid_command_with_argument(){
   Base* head = new Command("ls");
   head->add(new Argument("-a"));
+  
+  
   int exitVal = 0; 
   pid_t pid = fork();
 

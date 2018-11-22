@@ -72,8 +72,8 @@ void And::run(){
       }
 
       // If child was unsuccessful nothing happens
-      else if (WEXITSTATUS(child_status) != 2){
-          exit(errno);
+      else{
+          exit(WEXITSTATUS(child_status));
       }
     }
   }

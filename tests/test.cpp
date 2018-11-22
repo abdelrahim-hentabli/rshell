@@ -46,7 +46,7 @@ TEST(OR, QS_OR_EXIT){
   EXPECT_EQ(3, test_qs_or_exit());
 }
 
-TEST(OR, EXIT_or_LS){
+TEST(OR, EXIT_OR_LS){
   EXPECT_EQ(3, test_exit_or_ls());
 }
 
@@ -84,6 +84,60 @@ TEST(TEST_INVALID_PARSE_WITH_ARGUMENT, QS_A){
 }
 
 
+//And Test
+TEST(AND, LS_AND_EXIT){
+  EXPECT_EQ(3, test_ls_and_exit());
+}
+
+TEST(AND, QS_AND_EXIT){
+  EXPECT_EQ(2, test_qs_and_exit());
+}
+
+TEST(AND, EXIT_AND_LS){
+  EXPECT_EQ(3, test_exit_and_ls());
+}
+
+TEST(AND, EQIT_AND_LS){
+  EXPECT_EQ(2, test_eqit_and_ls());
+}
+
+TEST(AND, EQIT_AND_QS){
+  EXPECT_EQ(2, test_eqit_and_qs());
+}
+
+//And Test
+TEST(SEPARATOR, LS_SEP_EXIT){
+  EXPECT_EQ(3, test_ls_sep_exit());
+}
+
+TEST(SEPARATOR, QS_SEP_EXIT){
+  EXPECT_EQ(3, test_qs_sep_exit());
+}
+
+TEST(SEPARATOR, EXIT_SEP_LS){
+  EXPECT_EQ(3, test_exit_sep_ls());
+}
+
+TEST(SEPARATOR, EQIT_SEP_LS){
+  EXPECT_EQ(0, test_eqit_sep_ls());
+}
+
+TEST(SEPARATOR, EQIT_SEP_QS){
+  EXPECT_EQ(2, test_eqit_sep_qs());
+}
+
+//Comment Test
+TEST(COMMENT, EXIT_COMMENT){
+  EXPECT_EQ(3, test_exit_comment());
+}
+
+TEST(COMMENT, LS_COMMENT){
+  EXPECT_EQ(0, test_ls_comment());
+}
+
+TEST(COMMENT, QS_COMMENT){
+  EXPECT_EQ(2, test_qs_comment());
+}
 
 int main(int argc, char **argv){
   ::testing::InitGoogleTest(&argc, argv);

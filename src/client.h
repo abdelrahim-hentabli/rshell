@@ -53,6 +53,7 @@ void Client::run(){
         std::cout<<"Invalid Tree"<<std::endl;
         exit(4);
       }
+      
     }
   }
 }

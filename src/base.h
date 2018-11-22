@@ -31,9 +31,7 @@ public:
     }
     /* Assignment Operator */      
     virtual Base& operator= (Base& RHS){
-      printf("Base Assgn Op: START\n");
       swap(*this, RHS);
-      printf("Base Assign Op: END\n");
       return *this;
     }  
     /* Accessor function */
@@ -47,7 +45,6 @@ public:
     virtual ~Base() {
       if (this->representation != nullptr)
         delete this->representation;
-      printf("<BASE DESTRUCTOR has been called>\n");
     }
 
 

@@ -21,9 +21,7 @@ public:
   }
   /* Assignment Operator */
   virtual Command& operator= (Command RHS) {
-    printf("Command Assn Op: START\n");
     swap(*this, RHS);
-    printf("Command Assn Op: END\n");
     return *this;
   }
   /* Processor */
@@ -35,7 +33,6 @@ public:
     for (auto basePtr : argumentList)
       if (basePtr != nullptr)
         delete basePtr;
-    printf("<COMMAND Destructor has been called>\n");
   }
   /* Friend Function */
   friend void swap(Command& a, Command& b);
@@ -73,11 +70,8 @@ void Command::run() {
 
 /* Non-member Function */
 void swap(Command& a, Command& b) {
-    printf("Swap - START\n");
     std::swap(a.argumentList, b.argumentList);
-    printf("Swap - MIDDLE\n");
     swap(dynamic_cast<Base&>(a), dynamic_cast<Base&>(b));
-    printf("Swap - END\n");
 }
 
 

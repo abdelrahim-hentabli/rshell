@@ -10,9 +10,6 @@ TEST(TEST_INVALID_COMMAND, qs){
   EXPECT_EQ(2, test_invalid_command());
 }
 
-TEST(TEST_EMPTY_COMMAND, EMPTY){
-  EXPECT_EQ(2, test_empty_command());
-}
 
 TEST(TEST_EXIT_COMMAND, EXIT){
   EXPECT_EQ(3, test_exit_command());
@@ -20,6 +17,10 @@ TEST(TEST_EXIT_COMMAND, EXIT){
 
 TEST(TEST_VALID_COMMAND_WITH_ARGUMENT, LS_A){
   EXPECT_EQ(0, test_valid_command_with_argument());
+}
+
+TEST(TEST_INVALID_COMMAND_WITH_ARGUMENT, QS_A){
+  EXPECT_EQ(3, test_invalid_command_with_argument());
 }
 
 int main(int argc, char **argv){

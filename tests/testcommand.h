@@ -12,13 +12,6 @@ int test_valid_command_with_argument();
 int test_valid_command_with_empty_argument();
 int test_invalid_command_with_argument();
 
-int main(){
-  std::cout<<"VALID COMMAND: "<<test_valid_command()<<std::endl;
-  std::cout<<"INVALID COMMAND: "<<test_invalid_command()<<std::endl; 
-  return 0;
-}
-
-
 
 int test_valid_command(){
 

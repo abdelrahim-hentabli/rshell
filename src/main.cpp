@@ -3,7 +3,7 @@
 int main() {
  
   //creates and runs the client
-  Client theClient = Client();
+  Client theClient;
   theClient.run();
   return 0;
 }

@@ -35,6 +35,7 @@ public:
             head = nullptr;
         }
         currentCmnd = nullptr;
+        ss.clear();
     }
     Base* process();
     void preprocess();

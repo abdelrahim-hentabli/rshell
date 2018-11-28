@@ -23,7 +23,6 @@ Client::Client(){
   //get hostname and login name
   gethostname(hostName, HOST_NAME_MAX);
   getlogin_r(clientName, LOGIN_NAME_MAX);
-  parse = Parse("");
 }
 
 void Client::run(){

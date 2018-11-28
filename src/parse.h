@@ -49,7 +49,7 @@ public:
 Base* Parse::process() {
     preprocess();
     std::string token;
-    bool tak=eCommand = true;
+    bool takeCommand = true;
 
     while (ss >> token) {
         // Precedence
@@ -105,7 +105,7 @@ void Parse::preprocess(){
       i++;
     }
   }
-  ss(input);
+  ss << input;
 }
 
 #endif

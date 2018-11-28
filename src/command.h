@@ -16,7 +16,7 @@ private:
 public:
   /* Constructors */
   Command() : Base() {}
-  Command(char* repr) : Base(repr) {}
+  Command(std::string repr) : Base(repr) {}
   /* Copy Constructor */
   Command(const Command& RHS) : Base(dynamic_cast<const Base&>(RHS)) {
     this->argumentList = RHS.argumentList;
@@ -126,7 +126,7 @@ void Command::run() {
 
   //otherwise run execvp
   else{
-    execvp(argc[0], argc);
+    execvp(getConstRep(), argc);
     perror("Fail:");
   }
 }

@@ -13,11 +13,11 @@ private:
 public:
     /* Constructors */
     Connector() : left(nullptr), right(nullptr) {}   
-    Connector(char* rep) : Base(rep){
+    Connector(std::string rep) : Base(rep){
         left = nullptr;
         right = nullptr;
     };
-    Connector(char* rep, Base* l) :
+    Connector(std::string rep, Base* l) :
         Base(rep),
         left(l), 
         right(nullptr) 

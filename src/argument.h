@@ -11,7 +11,7 @@ class Argument: public Base {
 public:
     /* Constructors */
     Argument() {}
-    Argument(char* repr) : Base(repr) {} 
+    Argument(std::string repr) : Base(repr) {} 
     /* Copy Constructor */
     Argument(const Argument& RHS) : Base(dynamic_cast<const Base&>(RHS)) {}
     /* Assignment Operator */

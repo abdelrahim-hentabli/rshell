@@ -44,12 +44,6 @@ public:
 
 // Public Member Functions
 
-char* Parse::cStringConv(std::string text) {
-    char* cStr = new char[text.size() + 1];
-    text.copy(cStr, text.size() + 1);
-    cStr[text.size()] = '\0';
-    return cStr;
-}
 
 Base* Parse::process() {
     preprocess();
@@ -60,7 +54,7 @@ Base* Parse::process() {
     while (ss >> token) {
         // Commands
         if (takeCommand) {
-            currentCmnd = new Command(cStringConv(token));
+            currentCmnd = new Command(token);
             takeCommand = false;
             // First Command
             if (head == nullptr)
@@ -85,7 +79,7 @@ Base* Parse::process() {
         }
         // Arguments
         else {    
-            Base* temp = new Argument(cStringConv(token));
+            Base* temp = new Argument(token);
             currentCmnd->add(temp);
         } 
     }

@@ -4,7 +4,9 @@
 #include <vector>
 #include "base.h"
 #include <unistd.h>
-
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <iostream>
 
 class Command : public Base {
   
@@ -59,6 +61,67 @@ void Command::run() {
   //if command is exit
   if (std::string(getRep()) == "exit"){
     exit(3);
+  }
+  else if(std::string(getRep()) == "test"){ 
+    if(argumentList.size() < 1 || argumentList.size() > 2){
+      std::cout<<"Failed: Invalid Test Command"<<std::endl;
+      exit(2);
+    }
+    struct stat buff; 
+    if(argumentList.size() == 1){
+      stat(argc[1], &buff);
+      if(std::string(argc[1]) == "-e" || std::string(argc[1]) == "-f" 
+                    || std::string(argc[1]) == "-d"){
+        std::cout<<"(True)"<<std::endl;
+        exit(0);
+      } 
+      else if(S_ISREG(buff.st_mode) || S_ISDIR(buff.st_mode)){
+        std::cout<<"(True)"<<std::endl;
+        exit(0);
+      }
+      else{
+        std::cout<<"(False)"<<std::endl;
+        exit(2);
+      }
+    }
+    else if(std::string(argc[1]) == "-e"){
+      stat(argc[2], &buff);
+      if(S_ISREG(buff.st_mode) || S_ISDIR(buff.st_mode)){
+        std::cout<<"(True)"<<std::endl;
+        exit(0);
+      }
+      else{
+        std::cout<<"(False)"<<std::endl;
+        exit(2);
+      }
+    }
+    else if(std::string(argc[1]) == "-f"){
+      stat(argc[2], &buff);
+      if(S_ISREG(buff.st_mode)){
+        std::cout<<"(True)"<<std::endl;
+        exit(0);
+      }
+      else{
+        std::cout<<"(False)"<<std::endl;
+        exit(2);
+      }
+    }
+    else if(std::string(argc[1]) == "-d"){
+      stat(argc[2], &buff);
+      if(S_ISDIR(buff.st_mode)){
+        std::cout<<"(True)"<<std::endl;
+        exit(0);
+      }
+      else{
+        std::cout<<"(False)"<<std::endl;
+        exit(2);
+      }
+    }
+    else{
+      std::cout<<"Failed: Invalid Test Command"<<std::endl;
+      exit(2);
+    }
+
   }
 
   //otherwise run execvp

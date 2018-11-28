@@ -16,6 +16,7 @@ class Parse {
 
 private:
     std::string input;
+    std::stringstream ss;
     Base* head;
     Base* currentCmnd;
  
@@ -47,13 +48,17 @@ public:
 
 Base* Parse::process() {
     preprocess();
-    std::stringstream ss(input);
     std::string token;
-    bool takeCommand = true;
+    bool tak=eCommand = true;
 
     while (ss >> token) {
+        // Precedence
+        if (token == "(") {
+            
+        }
+        
         // Commands
-        if (takeCommand) {
+        else if (takeCommand) {
             currentCmnd = new Command(token);
             takeCommand = false;
             // First Command
@@ -65,7 +70,6 @@ Base* Parse::process() {
         } 
         // Separator(semi-colon)
         else if (token == ";") {
-            // Breaks off string from semi-colon
             head = new Separator(head);                 // Pass old head,
             takeCommand = true;                         // then set new head
         }
@@ -101,6 +105,7 @@ void Parse::preprocess(){
       i++;
     }
   }
+  ss(input);
 }
 
 #endif

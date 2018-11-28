@@ -36,6 +36,7 @@ public:
         currentCmnd = nullptr;
     }
     Base* process();
+    void preprocess();
     /* Destructor */
     ~Parse() { if (head != nullptr) delete head; }
 };
@@ -51,6 +52,7 @@ char* Parse::cStringConv(std::string text) {
 }
 
 Base* Parse::process() {
+    preprocess();
     std::stringstream ss(input);
     std::string token;
     bool takeCommand = true;
@@ -117,5 +119,20 @@ Base* Parse::process() {
     return head;
 }
 
+void Parse::preprocess(){
+  for(int i = 0; i < input.length(); i++){ 
+    if(input[i] == ';'){
+      input.insert(i, " ");
+      i++;
+    }
+    else if(input[i] == '('){
+      input.insert(i+1, " ");
+    }
+    else if(input[i] == ')'){
+      input.insert(i, " ");
+      i++;
+    }
+  }
+}
 
 #endif

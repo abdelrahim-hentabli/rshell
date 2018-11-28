@@ -60,45 +60,18 @@ Base* Parse::process() {
     while (ss >> token) {
         // Commands
         if (takeCommand) {
-            // Commands with Separator (';') appended
-            if (token.at(token.size() - 1) == ';') {
-                std::string subString = token.substr(0, token.size() - 1);
-                currentCmnd = new Command(cStringConv(subString));
-                // First Command (with Separator)
-                if (head == nullptr)
-                    head = new Separator(currentCmnd);
-                // Additional Commands (with Seperator)
-                else {
-                    head->add(currentCmnd);
-                    head = new Separator(head);
-                }
-            }
-            // Commands without Separator
-            else {
-                currentCmnd = new Command(cStringConv(token));
-                takeCommand = false;
-                // First Command
-                if (head == nullptr)
-                    head = currentCmnd;
-                // All other Commands
-                else
-                    head->add(currentCmnd);
-            }
+            currentCmnd = new Command(cStringConv(token));
+            takeCommand = false;
+            // First Command
+            if (head == nullptr)
+                head = currentCmnd;
+            // All other Commands
+            else
+                head->add(currentCmnd);
         } 
-        // Comments (pound character)
-        else if (token.at(0) == '#') {
-            head = new Comment(head);                   // Pass old head,
-            takeCommand = true;                         // then set new head
-            break;
-        }
         // Separator(semi-colon)
-        else if (token.at(token.size() - 1) == ';') {
+        else if (token == ";") {
             // Breaks off string from semi-colon
-            if (token.size() > 1) {
-                std::string subS = token.substr(0, token.size() - 1);
-                Base* temp = new Argument(cStringConv(subS));
-                currentCmnd->add(temp);
-            }
             head = new Separator(head);                 // Pass old head,
             takeCommand = true;                         // then set new head
         }
@@ -120,6 +93,7 @@ Base* Parse::process() {
 }
 
 void Parse::preprocess(){
+  input = input.substr(0, input.find("#"));
   for(int i = 0; i < input.length(); i++){ 
     if(input[i] == ';'){
       input.insert(i, " ");

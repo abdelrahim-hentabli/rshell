@@ -56,8 +56,13 @@ Base* Parse::process() {
             head = stck.top();
             stck.pop();
         }
+        // Mismatched handeling
+        if (token == "]") {
+            printError("[");
+            exit(2);
+        }
         // Precedence (open)
-        if (token == "(") {
+        else if (token == "(") {
             stck.push(head);
             stck.push(nullptr);
         }
@@ -170,6 +175,10 @@ Base* Parse::gotBracket(){
       ss << remainder.at(i) + " ";
     }
     
+  }
+  if(arguments.empty()){
+    printError("]");
+    exit(2);
   }
   if(arguments.at(arguments.size() - 1) == "]"){
     for(int i = 0; i < arguments.size() - 1; i++){

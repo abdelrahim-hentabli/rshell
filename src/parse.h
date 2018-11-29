@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <stack>
+#include <vector>
 #include "base.h"
 #include "command.h"
 #include "argument.h"
@@ -32,6 +33,7 @@ public:
     }
     Base* process();
     void preprocess();
+    Base* gotBracket();
     /* Destructor */
     ~Parse() = default;
 };
@@ -60,8 +62,17 @@ Base* Parse::process() {
         else if (token == ")") {}
         
         // Commands
-        else if (takeCommand) {
-            currentCmnd = new Command(token);
+        if (takeCommand) {
+            if(token == "[") {
+                currentCmnd = gotBracket();
+                if(currentCmnd == nullptr) {
+                    std::cout<<"Failed: expected ']'"<<std::endl;
+                    exit(2);
+                }
+            }
+            else {
+              currentCmnd = new Command(token);
+            }
             takeCommand = false;
             // First Command
             if (head == nullptr)
@@ -117,4 +128,33 @@ void Parse::preprocess(){
 }                                               // into stringstream
 
 
+Base* Parse::gotBracket(){
+  std::vector < std::string > arguments;
+  Base* testCmnd = new Command("test");
+  std::string token;
+  while(ss >> token && (token != "&&" && token != ";" && token != "||")){
+    arguments.push_back(token);
+  }
+  if(token == "&&" || token == ";" || token == "||"){
+    std::vector < std::string > remainder;
+    remainder.push_back(token);
+    while(ss >> token){
+      remainder.push_back(token);
+    }
+    ss = std::stringstream();
+    for(int i = 0; i < remainder.size(); i++){
+      ss << remainder.at(i) + " ";
+    }
+    
+  }
+  if(arguments.at(arguments.size() - 1) == "]"){
+    for(int i = 0; i < arguments.size() - 1; i++){
+      testCmnd->add(new Argument(arguments.at(i)));
+    }
+  }
+  else{
+    return nullptr;
+  }
+  return testCmnd;
+}
 #endif

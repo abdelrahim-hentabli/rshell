@@ -7,3 +7,5 @@ cmake_install.cmake
 lib
 rshell
 test
+
+src/local_main.cpp

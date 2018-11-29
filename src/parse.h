@@ -18,25 +18,22 @@ class Parse {
 private:
     std::string input;
     std::stringstream ss;
-    Base* currentCmnd;
  
 public:
     /* Constructors */
     Parse() {}
-    Parse(std::string inpt) 
-        : input(inpt), currentCmnd(nullptr) {}
+    Parse(std::string inpt) : input(inpt) {}
     /* Helper Function */
     char* cStringConv(std::string text);
     /* Mutators */
     void setInput(std::string inpt) { 
         this->input = inpt;
-        currentCmnd = nullptr;
         ss.clear();
     }
     Base* process();
     void preprocess();
     /* Destructor */
-    ~Parse() { if (currentCmnd != nullptr) delete currentCmnd; }
+    ~Parse() = default;
 };
 
 
@@ -46,10 +43,11 @@ Base* Parse::process() {
     preprocess();
     std::string token;
     std::stack<Base*> stck;
+    Base* currentCmnd = nullptr;
     bool takeCommand = true;
 
     while (ss >> token) {
-        Base* head;
+        Base* head = nullptr;
         // Pop off first element, for mutation
         if (!stck.empty()) {
             head = stck.top();
@@ -100,21 +98,23 @@ Base* Parse::process() {
 }
 
 void Parse::preprocess(){
-  input = input.substr(0, input.find("#"));
-  for(int i = 0; i < input.length(); i++){ 
-    if(input[i] == ';'){
-      input.insert(i, " ");
-      i++;
+    preprocess...\n");
+    input = input.substr(0, input.find("#"));
+    for(int i = 0; i < input.length(); i++){ 
+        if(input[i] == ';'){
+            input.insert(i, " ");
+            i++;
+        }
+        else if(input[i] == '('){
+            input.insert(i+1, " ");
+        }
+        else if(input[i] == ')'){
+            input.insert(i, " ");
+            i++;
+        }
     }
-    else if(input[i] == '('){
-      input.insert(i+1, " ");
-    }
-    else if(input[i] == ')'){
-      input.insert(i, " ");
-      i++;
-    }
-  }
-  ss << input;                                  // Put preprocessed input string
+    ss << input;                                // Put preprocessed input string
 }                                               // into stringstream
+
 
 #endif

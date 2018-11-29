@@ -11,7 +11,7 @@
 #include "separator.h"
 #include "and.h"
 #include "or.h"
-
+#include <stack>
 
 class Parse {
 
@@ -53,14 +53,23 @@ Base* Parse::process() {
     preprocess();
     std::string token;
     bool takeCommand = true;
-
+    std::stack<Base*> heads;
     while (ss >> token) {
         // Precedence
         if (token == "(") {
-            
+            heads.push(head);
+            head = nullptr;
+            currentCmnd = nullptr;
+        }
+        else if(token == ")"){
+            if(heads.top() != nullptr){
+              heads.top()->add(head);
+              head = heads.top();
+            }
+            heads.pop();
         }
         // Commands
-        if (takeCommand) {
+        else if (takeCommand) {
             if(token == "["){
               currentCmnd = gotBracket();
               if(currentCmnd == nullptr){

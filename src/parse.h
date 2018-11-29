@@ -62,6 +62,10 @@ Base* Parse::process() {
             currentCmnd = nullptr;
         }
         else if(token == ")") {
+            if(heads.empty()){
+              std::cout<<"Failed: expected '('"<<std::endl;
+              exit(2);
+            }
             if (heads.top() != nullptr){
                 heads.top()->add(head);
                 head = heads.top();
@@ -107,7 +111,13 @@ Base* Parse::process() {
             currentCmnd->add(temp);
         }
     }
-    return head;
+    if (heads.empty()){
+      return head;
+    }
+    else{
+      std::cout<<"Failed: expected ')'"<<std::endl;
+      exit(2);
+    }
 }
 
 

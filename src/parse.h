@@ -18,25 +18,22 @@ class Parse {
 private:
     std::string input;
     std::stringstream ss;
-    Base* currentCmnd;
+    //Base* currentCmnd;
  
 public:
     /* Constructors */
     Parse() {}
     Parse(std::string inpt) 
-        : input(inpt), currentCmnd(nullptr) {}
-    /* Helper Function */
-    char* cStringConv(std::string text);
+        : input(inpt) {}
     /* Mutators */
     void setInput(std::string inpt) { 
         this->input = inpt;
-        currentCmnd = nullptr;
         ss.clear();
     }
     Base* process();
     void preprocess();
     /* Destructor */
-    ~Parse() { if (currentCmnd != nullptr) delete currentCmnd; }
+    ~Parse() {}
 };
 
 
@@ -50,6 +47,7 @@ Base* Parse::process() {
 
     while (ss >> token) {
         Base* head;
+        Base* currentCmnd;
         // Pop off first element, for mutation
         if (!stck.empty()) {
             head = stck.top();
@@ -96,7 +94,9 @@ Base* Parse::process() {
             stck.push(head);
         } 
     }
-    return stck.top();
+    Base* tmp = stck.top();
+    stck.pop();
+    return tmp;
 }
 
 void Parse::preprocess(){

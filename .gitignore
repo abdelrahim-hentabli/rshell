@@ -8,4 +8,4 @@ lib
 rshell
 test
 
-src/nate_main.cpp
+src/local_main.cpp

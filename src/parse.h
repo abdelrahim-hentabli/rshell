@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <string>
+#include <stack>
 #include <vector>
 #include "base.h"
 #include "command.h"
@@ -20,7 +21,7 @@ private:
     std::stringstream ss;
     Base* head;
     Base* currentCmnd;
- 
+
 public:
     /* Constructors */
     Parse() {}
@@ -31,7 +32,7 @@ public:
     /* Mutators */
     void setInput(std::string inpt) { 
         this->input = inpt;
-        if (head != nullptr) {
+        if(head != nullptr){
             delete head;
             head = nullptr;
         }
@@ -48,85 +49,86 @@ public:
 
 // Public Member Functions
 
-
 Base* Parse::process() {
     preprocess();
     std::string token;
     bool takeCommand = true;
     std::stack<Base*> heads;
-    while (ss >> token) {
-        // Precedence
+    while(ss >> token) {
+        //Precedence
         if (token == "(") {
             heads.push(head);
             head = nullptr;
             currentCmnd = nullptr;
         }
-        else if(token == ")"){
-            if(heads.top() != nullptr){
-              heads.top()->add(head);
-              head = heads.top();
+        else if(token == ")") {
+            if (heads.top() != nullptr){
+                heads.top()->add(head);
+                head = heads.top();
             }
             heads.pop();
         }
         // Commands
         else if (takeCommand) {
-            if(token == "["){
-              currentCmnd = gotBracket();
-              if(currentCmnd == nullptr){
-                std::cout<<"Failed: expected ']'"<<std::endl;
-                exit(2);
-              }
+            if (token == "[") {
+                currentCmnd = gotBracket();
+                if (currentCmnd == nullptr){
+                    std::cout<<"Failed: expected ']'"<<std::endl;
+                    exit(2);
+                }
             }
             else{
-              currentCmnd = new Command(token);
+                currentCmnd = new Command(token);
             }
             takeCommand = false;
-            // First Command
+            //First Command
             if (head == nullptr)
                 head = currentCmnd;
-            // All other Commands
+            //All other Commands
             else
                 head->add(currentCmnd);
-        } 
-        // Separator(semi-colon)
-        else if (token == ";") {
-            head = new Separator(head);                 // Pass old head,
-            takeCommand = true;                         // then set new head
         }
-        else if (token == "&&") { 
-            head = new And(head);                       // Pass old head,
-            takeCommand = true;                         // then set new head 
+        // Separator (semi-colon)
+        else if (token == ";") {
+            head = new Separator(head);
+            takeCommand = true;
+        }
+        else if (token == "&&") {
+            head = new And(head);
+            takeCommand = true;
         }
         else if (token == "||") {
-            head = new Or(head);                        // Pass old head,
-            takeCommand = true;                         // then set new head
+            head = new Or(head);
+            takeCommand = true;
         }
-        // Arguments
-        else {    
+        //Arguments
+        else {
             Base* temp = new Argument(token);
             currentCmnd->add(temp);
-        } 
+        }
     }
     return head;
 }
 
+
 void Parse::preprocess(){
-  input = input.substr(0, input.find("#"));
-  for(int i = 0; i < input.length(); i++){ 
-    if(input[i] == ';'){
-      input.insert(i, " ");
-      i++;
+    input = input.substr(0, input.find("#"));
+    for(int i = 0; i < input.length(); i++){ 
+        if(input[i] == ';'){
+            input.insert(i, " ");
+            i++;
+        }
+        else if(input[i] == '('){
+            input.insert(i+1, " ");
+        }
+        else if(input[i] == ')'){
+            input.insert(i, " ");
+            i++;
+        }
     }
-    else if(input[i] == '('){
-      input.insert(i+1, " ");
-    }
-    else if(input[i] == ')'){
-      input.insert(i, " ");
-      i++;
-    }
-  }
-  ss << input;
-}
+    ss << input;                                // Put preprocessed input string
+}                                               // into stringstream
+
 
 Base* Parse::gotBracket(){
   std::vector < std::string > arguments;

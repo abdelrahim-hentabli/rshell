@@ -33,13 +33,13 @@ void Client::run(){
     std::cout << '[' << clientName << '@' << hostName << "]:~$ ";
     getline(std::cin, input);
     Parse parse(input);
-    head = parse.process(); 
     pid_t pid = fork();
 
     if(pid == -1){
       perror("Fork Failed: ");
     }
     else if(pid == 0){
+      head = parse.process(); 
       head->run();
       exit(errno);
     }

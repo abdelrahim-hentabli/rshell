@@ -33,6 +33,7 @@ public:
     }
     Base* process();
     void preprocess();
+    void printError(std::string str);
     Base* gotBracket();
     /* Destructor */
     ~Parse() = default;
@@ -55,24 +56,40 @@ Base* Parse::process() {
             head = stck.top();
             stck.pop();
         }
-        // Precedence
+        // Precedence (open)
         if (token == "(") {
+            stck.push(head);
             stck.push(nullptr);
         }
-        else if (token == ")") {}
+        // Precedence (close)
+        else if (token == ")") {
+            // Mismatched handling
+            if (stck.empty()) {
+                printError("(");
+                exit(2);
+            }
+            Base* oldHead = stck.top();
+            stck.pop();
+            if (!oldHead)
+                stck.push(head);
+            else {
+                oldHead->add(head);
+                stck.push(oldHead);
+            }
+            takeCommand = false;
+        }
         
         // Commands
-        if (takeCommand) {
-            if(token == "[") {
+        else if (takeCommand) {
+            if (token == "[") {
                 currentCmnd = gotBracket();
-                if(currentCmnd == nullptr) {
-                    std::cout<<"Failed: expected ']'"<<std::endl;
+                if (currentCmnd == nullptr) {
+                    printError("]");
                     exit(2);
                 }
             }
-            else {
-              currentCmnd = new Command(token);
-            }
+            else
+                currentCmnd = new Command(token);
             takeCommand = false;
             // First Command
             if (head == nullptr)
@@ -105,9 +122,12 @@ Base* Parse::process() {
             stck.push(head);
         } 
     }
-    Base* tmp = stck.top();
-    stck.pop();
-    return tmp;
+    // Mismatched handling
+    if (stck.size() > 1) { 
+        printError(")");
+        exit(2);
+    }
+    return stck.top();
 }
 
 void Parse::preprocess(){
@@ -128,6 +148,9 @@ void Parse::preprocess(){
     ss << input;                                // Put preprocessed input string
 }                                               // into stringstream
 
+void Parse::printError(std::string str) {
+    std::cout << "Error: expected '" << str << "'" << std::endl;
+}
 
 Base* Parse::gotBracket(){
   std::vector < std::string > arguments;

@@ -32,12 +32,10 @@ void Client::run(){
   while(true){
     std::cout << '[' << clientName << '@' << hostName << "]:~$ ";
     getline(std::cin, input);
-    //Parse parse(input);
-    Parse parse;
-    parse.setInput(input);
-    std::cout << "initializing head to new parse.process();" << std::endl;
+    Parse parse(input);
     head = parse.process(); 
     pid_t pid = fork();
+
     if(pid == -1){
       perror("Fork Failed: ");
     }
@@ -54,8 +52,7 @@ void Client::run(){
       else if(WEXITSTATUS(child_status) == 4){
         std::cout<<"Invalid Tree"<<std::endl;
         exit(4);
-      }
-      
+      }  
     }
   }
 }

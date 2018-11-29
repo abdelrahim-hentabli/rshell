@@ -109,7 +109,6 @@ Base* Parse::process() {
 }
 
 void Parse::preprocess(){
-    preprocess...\n");
     input = input.substr(0, input.find("#"));
     for(int i = 0; i < input.length(); i++){ 
         if(input[i] == ';'){

@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <string>
+#include <stack>
 #include "base.h"
 #include "command.h"
 #include "argument.h"
@@ -17,46 +18,48 @@ class Parse {
 private:
     std::string input;
     std::stringstream ss;
-    Base* head;
     Base* currentCmnd;
  
 public:
     /* Constructors */
     Parse() {}
     Parse(std::string inpt) 
-        : input(inpt), head(nullptr), currentCmnd(nullptr) {}
+        : input(inpt), currentCmnd(nullptr) {}
     /* Helper Function */
     char* cStringConv(std::string text);
     /* Mutators */
     void setInput(std::string inpt) { 
         this->input = inpt;
-        if (head != nullptr) {
-            delete head;
-            head = nullptr;
-        }
         currentCmnd = nullptr;
         ss.clear();
     }
     Base* process();
     void preprocess();
     /* Destructor */
-    ~Parse() { if (head != nullptr) delete head; }
+    ~Parse() { if (currentCmnd != nullptr) delete currentCmnd; }
 };
 
 
 // Public Member Functions
 
-
 Base* Parse::process() {
     preprocess();
     std::string token;
+    std::stack<Base*> stck;
     bool takeCommand = true;
 
     while (ss >> token) {
+        Base* head;
+        // Pop off first element, for mutation
+        if (!stck.empty()) {
+            head = stck.top();
+            stck.pop();
+        }
         // Precedence
         if (token == "(") {
-            
+            stck.push(nullptr);
         }
+        else if (token == ")") {}
         
         // Commands
         else if (takeCommand) {
@@ -68,27 +71,32 @@ Base* Parse::process() {
             // All other Commands
             else
                 head->add(currentCmnd);
+            stck.push(head);
         } 
         // Separator(semi-colon)
         else if (token == ";") {
-            head = new Separator(head);                 // Pass old head,
-            takeCommand = true;                         // then set new head
+            head = new Separator(head);         // Pass old head,
+            takeCommand = true;                 // then set new head
+            stck.push(head);
         }
         else if (token == "&&") { 
-            head = new And(head);                       // Pass old head,
-            takeCommand = true;                         // then set new head 
+            head = new And(head);               // Pass old head,
+            takeCommand = true;                 // then set new head
+            stck.push(head);
         }
         else if (token == "||") {
-            head = new Or(head);                        // Pass old head,
-            takeCommand = true;                         // then set new head
+            head = new Or(head);                // Pass old head,
+            takeCommand = true;                 // then set new head
+            stck.push(head);
         }
         // Arguments
         else {    
             Base* temp = new Argument(token);
             currentCmnd->add(temp);
+            stck.push(head);
         } 
     }
-    return head;
+    return stck.top();
 }
 
 void Parse::preprocess(){
@@ -106,7 +114,7 @@ void Parse::preprocess(){
       i++;
     }
   }
-  ss << input;
-}
+  ss << input;                                  // Put preprocessed input string
+}                                               // into stringstream
 
 #endif

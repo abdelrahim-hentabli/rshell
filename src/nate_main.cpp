@@ -16,6 +16,9 @@ using namespace std;
 
 int main() {
 
+    int* test = nullptr;
+    delete test;
+
     Argument* branch = new Argument("branch");
     Argument* status = new Argument("status");
     Argument* echo0 = new Argument("Hello World!");

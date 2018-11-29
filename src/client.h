@@ -12,7 +12,7 @@ class Client{
  */
   char hostName[HOST_NAME_MAX];
   char clientName[LOGIN_NAME_MAX];
-  Parse parse;
+  //Parse parse;
 public:
   Client();
   // Loop taking in input and parsing and running
@@ -32,6 +32,7 @@ void Client::run(){
   while(true){
     std::cout << '[' << clientName << '@' << hostName << "]:~$ ";
     getline(std::cin, input);
+    Parse parse;
     parse.setInput(input);
     head = parse.process(); 
     pid_t pid = fork();

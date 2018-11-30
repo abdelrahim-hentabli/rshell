@@ -139,6 +139,11 @@ TEST(COMMENT, QS_COMMENT){
   EXPECT_EQ(2, test_qs_comment());
 }
 
+//Bracket Test
+TEST(BRACKET, E_TEST){
+  EXPECT_EQ(0, test_valid_bracket());
+}
+
 int main(int argc, char **argv){
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

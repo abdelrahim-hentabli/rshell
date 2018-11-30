@@ -33,7 +33,45 @@ TEST(TEST_INVALID_COMMAND_WITH_ARGUMENT, QS_A){
   EXPECT_EQ(2, test_invalid_command_with_argument());
 }
 
+TEST(TEST_VALID_TEST_E_COMMAND, SRC){
+  EXPECT_EQ(0, test_valid_test_e_command());
+}
 
+TEST(TEST_INVALID_TEST_E_COMMAND, S){
+  EXPECT_EQ(2, test_invalid_test_e_command());
+}
+
+TEST(TEST_VALID_TEST_D_COMMAND, SRC){
+  EXPECT_EQ(0, test_valid_test_d_command());
+}
+
+TEST(TEST_INVALID_TEST_D_COMMAND, TEST){
+  EXPECT_EQ(2, test_invalid_test_d_command());
+}
+
+TEST(TEST_VALID_TEST_F_COMMAND, TEST){
+  EXPECT_EQ(0, test_valid_test_f_command());
+}
+
+TEST(TEST_INVALID_TEST_F_COMMAND, SRC){
+  EXPECT_EQ(2, test_invalid_test_f_command());
+}
+
+TEST(TEST_VALID_ONE_ARGUMENT_TEST_COMMAND, SRC){
+  EXPECT_EQ(0, test_valid_one_argument_test_command());
+}
+
+TEST(TEST_INVALID_ONE_ARGUMENT_TEST_COMMAND, S){
+  EXPECT_EQ(2, test_invalid_one_argument_test_command());
+}
+
+TEST(TEST_ZERO_ARGUMENT_TEST_COMMAND, EMPTY){
+  EXPECT_EQ(2, test_zero_argument_test_command());
+}
+
+TEST(TEST_THREE_ARGUMENT_TEST_COMMAND, SRC_FAIL){
+  EXPECT_EQ(2, test_three_argument_test_command());
+}
 
 /*Connector Tests*/
 

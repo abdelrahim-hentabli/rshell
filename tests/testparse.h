@@ -154,7 +154,65 @@ int test_invalid_no_space_bracket() {
     return WEXITSTATUS(exitVal);
 }
 
+int test_invalid_no_left_bracket() {
+    Parse prs("-e src ]");
+    int exitVal = 0;
+    pid_t pid = fork();
+    if (pid == 0){
+        Base* head = prs.process();
+        head->run();
+        exit(errno);
+    }
+    else{
+        waitpid(pid, &exitVal, 2 );
+    }
+    return WEXITSTATUS(exitVal);
+}
 
+int test_invalid_no_right_bracket() {
+    Parse prs("[ -e src");
+    int exitVal = 0;
+    pid_t pid = fork();
+    if (pid == 0){
+        Base* head = prs.process();
+        head->run();
+        exit(errno);
+    }
+    else{
+        waitpid(pid, &exitVal, 2 );
+    }
+    return WEXITSTATUS(exitVal);
+}
+
+int test_valid_test_bracket() {
+    Parse prs("test -e src");
+    int exitVal = 0;
+    pid_t pid = fork();
+    if (pid == 0){
+        Base* head = prs.process();
+        head->run();
+        exit(errno);
+    }
+    else{
+        waitpid(pid, &exitVal, 0);
+    }
+    return WEXITSTATUS(exitVal);
+}
+
+int test_invalid_test_bracket() {
+    Parse prs("test -e src ]");
+    int exitVal = 0;
+    pid_t pid = fork();
+    if (pid == 0){
+        Base* head = prs.process();
+        head->run();
+        exit(errno);
+    }
+    else{
+        waitpid(pid, &exitVal, 2);
+    }
+    return WEXITSTATUS(exitVal);
+}
 
 int test_valid_precedence() {
     Parse prs("(echo A)");
@@ -230,7 +288,3 @@ int test_valid_long_precedence() {
     }
     return WEXITSTATUS(exitVal);
 }
-
-
-
-

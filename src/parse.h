@@ -159,6 +159,10 @@ Base* Parse::gotBracket(){
     }
     
   }
+  if(arguments.empty()){
+    std::cout<<"Failed: Expected '['"<<std::endl;
+    exit(2);
+  }
   if(arguments.at(arguments.size() - 1) == "]"){
     for(int i = 0; i < arguments.size() - 1; i++){
       testCmnd->add(new Argument(arguments.at(i)));

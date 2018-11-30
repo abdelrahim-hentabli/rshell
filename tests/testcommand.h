@@ -153,7 +153,7 @@ int test_invalid_command_with_argument(){
 int test_valid_test_e_command(){
   Base* head = new Command("test");
   head->add(new Argument("-e"));
-  head->add(new Argument("/src"));
+  head->add(new Argument("src"));
   int exitVal = 0;
   pid_t pid = fork();
   if(pid == 0){
@@ -170,7 +170,7 @@ int test_valid_test_e_command(){
 int test_invalid_test_e_command(){
   Base* head = new Command("test");
   head->add(new Argument("-e"));
-  head->add(new Argument("/s"));
+  head->add(new Argument("asdf"));
   int exitVal = 0;
   pid_t pid = fork();
   if(pid == 0){
@@ -204,7 +204,7 @@ int test_valid_test_f_command(){
 int test_invalid_test_f_command(){
   Base* head = new Command("test");
   head->add(new Argument("-f"));
-  head->add(new Argument("/src"));
+  head->add(new Argument("src"));
   int exitVal = 0;
   pid_t pid = fork();
   if(pid == 0){
@@ -221,7 +221,7 @@ int test_invalid_test_f_command(){
 int test_valid_test_d_command(){
   Base* head = new Command("test");
   head->add(new Argument("-d"));
-  head->add(new Argument("/src"));
+  head->add(new Argument("src"));
   int exitVal = 0;
   pid_t pid = fork();
   if(pid == 0){
@@ -254,7 +254,7 @@ int test_invalid_test_d_command(){
 
 int test_valid_one_argument_test_command(){
   Base* head = new Command("test");
-  head->add(new Argument("/src"));
+  head->add(new Argument("src"));
   int exitVal = 0;
   pid_t pid = fork();
   if(pid == 0){
@@ -270,7 +270,7 @@ int test_valid_one_argument_test_command(){
 
 int test_invalid_one_argument_test_command(){
   Base* head = new Command("test");
-  head->add(new Argument("/s"));
+  head->add(new Argument("s"));
   int exitVal = 0;
   pid_t pid = fork();
   if(pid == 0){
@@ -302,7 +302,7 @@ int test_zero_argument_test_command(){
 int test_three_argument_test_command(){
   Base* head = new Command("test");
   head->add(new Argument("-d"));
-  head->add(new Argument("/src"));
+  head->add(new Argument("src"));
   head->add(new Argument("FAIL"));
   int exitVal = 0;
   pid_t pid = fork();

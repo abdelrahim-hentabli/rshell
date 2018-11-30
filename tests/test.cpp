@@ -37,10 +37,6 @@ TEST(TEST_VALID_TEST_E_COMMAND, SRC){
   EXPECT_EQ(0, test_valid_test_e_command());
 }
 
-TEST(TEST_INVALID_TEST_E_COMMAND, S){
-  EXPECT_EQ(2, test_invalid_test_e_command());
-}
-
 TEST(TEST_VALID_TEST_D_COMMAND, SRC){
   EXPECT_EQ(0, test_valid_test_d_command());
 }
@@ -143,7 +139,7 @@ TEST(AND, EQIT_AND_QS){
   EXPECT_EQ(2, test_eqit_and_qs());
 }
 
-//And Test
+//Separator Test
 TEST(SEPARATOR, LS_SEP_EXIT){
   EXPECT_EQ(3, test_ls_sep_exit());
 }

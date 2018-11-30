@@ -150,7 +150,6 @@ void Parse::preprocess(){
             i++;
         }
     }
-    std::cout<<input<<std::endl;
     ss << input;                                // Put preprocessed input string
 }                                               // into stringstream
 

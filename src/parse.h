@@ -150,6 +150,7 @@ void Parse::preprocess(){
             i++;
         }
     }
+    std::cout<<input<<std::endl;
     ss << input;                                // Put preprocessed input string
 }                                               // into stringstream
 
@@ -161,10 +162,10 @@ Base* Parse::gotBracket(){
   std::vector < std::string > arguments;
   Base* testCmnd = new Command("test");
   std::string token;
-  while(ss >> token && (token != "&&" && token != ";" && token != "||")){
+  while(ss >> token && (token != "&&" && token != ";" && token != "||" && token != ")")){
     arguments.push_back(token);
   }
-  if(token == "&&" || token == ";" || token == "||"){
+  if(token == "&&" || token == ";" || token == "||" ||  token == ")"){
     std::vector < std::string > remainder;
     remainder.push_back(token);
     while(ss >> token){
@@ -180,13 +181,14 @@ Base* Parse::gotBracket(){
     printError("]");
     exit(2);
   }
-  if(arguments.at(arguments.size() - 1) == "]"){
+  else if(arguments.at(arguments.size() - 1) == "]"){
     for(int i = 0; i < arguments.size() - 1; i++){
       testCmnd->add(new Argument(arguments.at(i)));
     }
   }
   else{
-    return nullptr;
+    printError("]");
+    exit(2);
   }
   return testCmnd;
 }

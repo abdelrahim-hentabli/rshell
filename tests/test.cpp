@@ -182,6 +182,48 @@ TEST(BRACKET, E_TEST){
   EXPECT_EQ(0, test_valid_bracket());
 }
 
+TEST(BRACKET, NO_SPACE){
+  EXPECT_EQ(2, test_invalid_no_space_bracket());
+}
+
+TEST(BRACKET, NO_LEFT){
+  EXPECT_EQ(2, test_invalid_no_left_bracket());
+}
+
+TEST(BRACKET, NO_RIGHT){
+  EXPECT_EQ(2, test_invalid_no_right_bracket());
+}
+
+TEST(BRACKET, VALID_TEST_STRING){
+  EXPECT_EQ(0, test_valid_test_bracket());
+}
+
+TEST(BRACKET, INVALID_TEST_STRING){
+  EXPECT_EQ(2, test_invalid_test_bracket());
+}
+
+//Precedence Test
+
+TEST(BRACKET, VALID_PRESEDENCE){
+  EXPECT_EQ(0, test_valid_precedence());
+}
+
+TEST(BRACKET, IN_VALID_LEFT_PRESEDENCE){
+  EXPECT_EQ(2, test_invalid_left_precedence());
+}
+
+TEST(BRACKET, IN_VALID_RIGHT_PRESEDENCE){
+  EXPECT_EQ(2, test_invalid_right_precedence());
+}
+
+TEST(BRACKET, IN_INVALID_MISMATCH_PRESEDENCE){
+  EXPECT_EQ(2, test_invalid_mismatch_precedence());
+}
+
+TEST(BRACKET, VALID_LONG_PRESEDENCE){
+  EXPECT_EQ(0, test_valid_long_precedence());
+}
+
 int main(int argc, char **argv){
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

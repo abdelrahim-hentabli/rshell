@@ -22,16 +22,21 @@ void Pipe::run(){
   else{
     int mypipe[2];
     int child_status;
+    if ( pipe(mypipe) ){
+      std::cout<<"Pipe Failed"<<std::endl;
+      exit(2);
+    }
     pid_t pid = fork();
     if ( pid == -1){
       perror("Fork Failed:");
       exit(2);
     }
     else if ( pid == 0){
+      dup2(mypipe[1], 1);
+      close(mypipe[0]);
       close(mypipe[1]);
-      dup2(mypipe[0], 1); 
       this->getLeft()->run();
-      exit(errno);      
+      exit(errno); 
     }
     else {
       waitpid(pid, &child_status, 0);
@@ -42,10 +47,10 @@ void Pipe::run(){
         exit(2);
       }
       else {
+        dup2(mypipe[0], 0);
         close(mypipe[0]);
-        dup2(mypipe[1], 0);
-        this->getRight()->run();
         close(mypipe[1]);
+        this->getRight()->run();
         exit(errno);
       }
     }

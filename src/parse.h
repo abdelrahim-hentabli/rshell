@@ -15,6 +15,9 @@
 #include "inputredirect.h"
 #include "outputredirect.h"
 #include "outputredirectappend.h"
+#include "inputoutputredirect.h"
+#include "pipe.h"
+
 
 class Parse {
 
@@ -85,7 +88,6 @@ Base* Parse::process() {
             }
             takeCommand = false;
         }
-        
         // Commands
         else if (takeCommand) {
             if (token == "[") {
@@ -134,6 +136,16 @@ Base* Parse::process() {
         }
         else if (token == ">>") {
             head = new OutputRedirectAppend(head);
+            takeCommand = true;
+            stck.push(head);
+        }
+        else if (token == "<>") {
+            head = new InputOutputRedirect(head);
+            takeCommand = true;
+            stck.push(head);
+        }
+        else if (token == "|") {
+            head = new Pipe(head);
             takeCommand = true;
             stck.push(head);
         }

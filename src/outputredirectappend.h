@@ -18,7 +18,7 @@ void OutputRedirectAppend::run(){
     exit(4);
   }
   else{
-    int outputFile = open(this->getRight()->getRep(), O_WRONLY | O_APPEND | O_TRUNC | O_CREAT, S_IREAD | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH );
+    int outputFile = open(this->getRight()->getRep(), O_WRONLY | O_APPEND |  O_CREAT, S_IREAD | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH );
     dup2(outputFile, 1);
     this->getLeft()->run();
     exit(errno);

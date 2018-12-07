@@ -2,11 +2,9 @@
 #define INPUTREDIRECT_H
 
 #include "connector.h"
-#include <sys/wait.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <cstring>
 
 class InputRedirect: public Connector{
 public:

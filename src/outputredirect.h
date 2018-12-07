@@ -2,11 +2,9 @@
 #define OUTPUTREDIRECT_H
 
 #include "connector.h"
-#include <sys/wait.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <cstring>
 
 class OutputRedirect: public Connector{
 public:

@@ -12,7 +12,9 @@
 #include "separator.h"
 #include "and.h"
 #include "or.h"
-
+#include "inputredirect.h"
+#include "outputredirect.h"
+#include "outputredirectappend.h"
 
 class Parse {
 
@@ -118,6 +120,21 @@ Base* Parse::process() {
         else if (token == "||") {
             head = new Or(head);                // Pass old head,
             takeCommand = true;                 // then set new head
+            stck.push(head);
+        }
+        else if (token == ">") {
+            head = new OutputRedirect(head);
+            takeCommand = true;
+            stck.push(head);
+        }
+        else if (token == "<") {
+            head = new InputRedirect(head);
+            takeCommand = true;
+            stck.push(head);
+        }
+        else if (token == ">>") {
+            head = new OutputRedirectAppend(head);
+            takeCommand = true;
             stck.push(head);
         }
         // Arguments

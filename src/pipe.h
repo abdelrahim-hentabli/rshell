@@ -29,9 +29,8 @@ void Pipe::run(){
     }
     else if ( pid == 0){
       close(mypipe[1]);
-      dup2(mypipe[0], 0); 
+      dup2(mypipe[0], 1); 
       this->getLeft()->run();
-      close(mypipe[0]);
       exit(errno);      
     }
     else {
@@ -44,7 +43,7 @@ void Pipe::run(){
       }
       else {
         close(mypipe[0]);
-        dup2(mypipe[1], 1);
+        dup2(mypipe[1], 0);
         this->getRight()->run();
         close(mypipe[1]);
         exit(errno);

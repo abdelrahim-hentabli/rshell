@@ -17,6 +17,11 @@ To run the code, you first need to clone the repository.
 ```
 git clone https://github.com/abdelrahim-hentabli/rshell
 ```
+And then initialize the googletest submodule.
+```
+git submodule init
+git submodule update
+```
 
 Then you need to call
 ```

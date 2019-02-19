@@ -5,6 +5,7 @@
 #include <string>
 #include <stack>
 #include <vector>
+#include <queue>
 #include "base.h"
 #include "command.h"
 #include "argument.h"
@@ -24,7 +25,7 @@ class Parse {
 private:
     std::string input;
     std::stringstream ss;
- 
+    std::queue<std::string> quoteQueue; 
 public:
     /* Constructors */
     Parse() {}
@@ -149,6 +150,11 @@ Base* Parse::process() {
             takeCommand = true;
             stck.push(head);
         }
+        else if (token == "\"\""){
+            currentCmnd->add(new Argument(quoteQueue.front()));
+            quoteQueue.pop();
+            stck.push(head);
+        }
         // Arguments
         else {    
             Base* temp = new Argument(token);
@@ -165,8 +171,30 @@ Base* Parse::process() {
 }
 
 void Parse::preprocess(){
+    std::string quote;
+    int start;
+    int end;
     input = input.substr(0, input.find("#"));
     for(int i = 0; i < input.length(); i++){ 
+        if(input[i] == '"'){
+            quote = "";
+            i++;
+            start = i;
+            while (i < input.length() && input[i] != '"'){
+              quote = quote + input[i];
+              i++;
+            }
+            end = i;
+            if(i == input.length()){
+              printError("\"");
+              exit(2);
+            }
+            if(start != end){
+              input.erase(start, end-start);
+            }
+            quoteQueue.push(quote);
+            i -= end-start;
+        }
         if(input[i] == ';'){
             input.insert(i, " ");
             i++;

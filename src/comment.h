@@ -20,7 +20,7 @@ public:
       return *this;
   }
   /* Processor */
-  void run();
+  void run(int dirPipe[] = nullptr);
   /* Destructor */
   ~Comment() = default;
 
@@ -29,7 +29,7 @@ public:
 };
 
 /* Member Function */
-void Comment::run(){
+void Comment::run(int dirPipe[]){
   //exit if invalid tree
   if (this->getLeft() == nullptr){
     exit(4);

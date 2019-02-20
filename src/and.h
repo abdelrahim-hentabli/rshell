@@ -23,7 +23,7 @@ public:
       return *this;
   }
   /* Processor */
-  void run();
+  void run(int dirPipe[] = nullptr);
   /* Destructor */
   ~And() = default;
 
@@ -33,7 +33,7 @@ public:
 
 
 /* Member Function */
-void And::run(){
+void And::run(int dirPipe[]){
   
   // If a user tries to run an empty and throw an exception
   if (this->getLeft() == nullptr || this->getRight() == nullptr){

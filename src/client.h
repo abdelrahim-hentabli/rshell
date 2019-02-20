@@ -13,6 +13,7 @@ class Client{
   char hostName[HOST_NAME_MAX];
   char clientName[LOGIN_NAME_MAX];
   char directory[FILENAME_MAX];
+  int dirPipe[2];
   //Parse parse;
 public:
   Client();
@@ -25,6 +26,7 @@ Client::Client(){
   gethostname(hostName, HOST_NAME_MAX);
   getlogin_r(clientName, LOGIN_NAME_MAX);
   getcwd(directory, FILENAME_MAX);
+  pipe(dirPipe);
 }
 
 void Client::run(){
@@ -41,7 +43,7 @@ void Client::run(){
     }
     else if(pid == 0){
       head = parse.process();
-      head->run();
+      head->run(dirPipe);
       exit(errno);
     }
     else{
@@ -53,6 +55,11 @@ void Client::run(){
       else if(WEXITSTATUS(child_status) == 4){
         std::cout<<"Invalid Tree"<<std::endl;
         exit(4);
+      }
+      else if(WEXITSTATUS(child_status) == 5){
+        read(dirPipe[0], directory, FILENAME_MAX);
+        chdir(directory);
+        getcwd(directory, FILENAME_MAX);
       }
     }
   }

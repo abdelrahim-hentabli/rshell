@@ -20,7 +20,7 @@ public:
         return *this;
     }
     /* Processor */
-    void run();
+    void run(int dirPipe[] = nullptr);
     /* Destructor */
     ~Separator() = default;
 
@@ -29,7 +29,7 @@ public:
 };
 
 /* Member Function */
-void Separator::run(){
+void Separator::run(int dirPipe[]){
   if(this->getLeft() == nullptr){
     exit(4);
   }

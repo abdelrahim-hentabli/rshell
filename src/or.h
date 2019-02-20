@@ -20,7 +20,7 @@ public:
       return *this;
   }
   /* Processor */
-  void run();
+  void run(int dirPipe[] = nullptr);
   /* Destructor */
   ~Or() = default;
 
@@ -29,7 +29,7 @@ public:
 };
 
 /* Member Function */
-void Or::run() {
+void Or::run(int dirPipe[]) {
   //exit if invalid tree
   if (this->getLeft() == nullptr || this->getRight() == nullptr) {
     exit(4);

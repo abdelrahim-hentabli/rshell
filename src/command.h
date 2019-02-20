@@ -27,7 +27,7 @@ public:
     return *this;
   }
   /* Processor */
-  void run();
+  void run(int dirPipe[] = nullptr);
   /* Mutator */
   void add( Base* argument ) { argumentList.push_back(argument); }
   /* Destructor */
@@ -42,7 +42,7 @@ public:
 
 
 /* Member Function */
-void Command::run() {
+void Command::run(int dirPipe[]) {
   
   //array argc contains representation and all arguments as well as a nullptr
   char* argc [argumentList.size() + 2];
@@ -59,7 +59,11 @@ void Command::run() {
   }
   
   //if command is exit
-  if (std::string(getRep()) == "exit"){
+  if (std::string(getRep()) == "cd"){
+    write(dirPipe[1], argc[1], FILENAME_MAX);
+    exit(5);
+  }
+  else if (std::string(getRep()) == "exit"){
     exit(3);
   }
   else if(std::string(getRep()) == "test"){ 

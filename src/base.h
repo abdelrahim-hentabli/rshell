@@ -32,7 +32,7 @@ public:
     /* Mutator function */
     void setRep(std::string rep) { this->representation = rep; }
     /* Pure Virtual functions */
-    virtual void run() = 0;
+    virtual void run(int dirPipe[] = nullptr) = 0;
     virtual void add(Base* obj) = 0;
     /* Destructor */
     virtual ~Base() {}

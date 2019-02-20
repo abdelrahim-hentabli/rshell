@@ -50,7 +50,7 @@ public:
             setRight(obj);
     }
     /* Pure Virtual */
-    virtual void run() = 0;
+    virtual void run(int dirPipe[] = nullptr) = 0;
     /* Destructor */
     virtual ~Connector() {
         if (left != nullptr) {

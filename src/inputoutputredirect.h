@@ -9,10 +9,10 @@ class InputOutputRedirect: public Connector{
 public:
   InputOutputRedirect():Connector("<>"){}
   InputOutputRedirect(Base* left) : Connector("<>", left){}
-  void run();
+  void run(int dirPipe[] = nullptr);
 };
 
-void InputOutputRedirect::run(){
+void InputOutputRedirect::run(int dirPipe[]){
   //exit if invalid tree
   if (this->getLeft() == nullptr || this->getRight() == nullptr) {
     exit(4);

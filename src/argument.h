@@ -20,7 +20,7 @@ public:
         return *this;
     }
     /* Empty functions no functionality for argument */
-    void run() {}
+    void run(int dirPipe[] = nullptr) {}
     void add(Base*) {}
     /* Destructor */
     ~Argument() = default;

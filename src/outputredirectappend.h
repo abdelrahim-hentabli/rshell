@@ -9,10 +9,10 @@ class OutputRedirectAppend: public Connector{
 public:
   OutputRedirectAppend():Connector(">>"){}
   OutputRedirectAppend(Base* left) : Connector(">>", left){}
-  void run();
+  void run(int dirPipe[] = nullptr);
 };
 
-void OutputRedirectAppend::run(){
+void OutputRedirectAppend::run(int dirPipe[]){
   //exit if invalid tree
   if (this->getLeft() == nullptr || this->getRight() == nullptr) {
     exit(4);

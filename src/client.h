@@ -12,6 +12,7 @@ class Client{
  */
   char hostName[HOST_NAME_MAX];
   char clientName[LOGIN_NAME_MAX];
+  char directory[FILENAME_MAX];
   //Parse parse;
 public:
   Client();
@@ -23,6 +24,7 @@ Client::Client(){
   //get hostname and login name
   gethostname(hostName, HOST_NAME_MAX);
   getlogin_r(clientName, LOGIN_NAME_MAX);
+  getcwd(directory, FILENAME_MAX);
 }
 
 void Client::run(){
@@ -30,16 +32,15 @@ void Client::run(){
   int child_status;
   Base* head;
   while(true){
-    std::cout << '[' << clientName << '@' << hostName << "]:~$ ";
+    std::cout << '[' << clientName << '@' << hostName << "]:"<<directory<<"$ ";
     getline(std::cin, input);
     Parse parse(input);
     pid_t pid = fork();
-
     if(pid == -1){
       perror("Fork Failed: ");
     }
     else if(pid == 0){
-      head = parse.process(); 
+      head = parse.process();
       head->run();
       exit(errno);
     }
@@ -52,7 +53,7 @@ void Client::run(){
       else if(WEXITSTATUS(child_status) == 4){
         std::cout<<"Invalid Tree"<<std::endl;
         exit(4);
-      }  
+      }
     }
   }
 }

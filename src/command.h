@@ -69,7 +69,10 @@ void Command::run() {
     }
     struct stat buff; 
     if(argumentList.size() == 1){
-      stat(argc[1], &buff);
+      if(stat(argc[1], &buff)){
+        std::cout<<"(False)"<<std::endl;
+        exit(2);
+      }
       if(std::string(argc[1]) == "-e" || std::string(argc[1]) == "-f" 
                     || std::string(argc[1]) == "-d"){
         std::cout<<"(True)"<<std::endl;
@@ -85,7 +88,10 @@ void Command::run() {
       }
     }
     else if(std::string(argc[1]) == "-e"){
-      stat(argc[2], &buff);
+      if(stat(argc[2], &buff)){
+        std::cout<<"(False)"<<std::endl;
+        exit(2);
+      }
       if(S_ISREG(buff.st_mode) || S_ISDIR(buff.st_mode)){
         std::cout<<"(True)"<<std::endl;
         exit(0);
@@ -96,7 +102,10 @@ void Command::run() {
       }
     }
     else if(std::string(argc[1]) == "-f"){
-      stat(argc[2], &buff);
+      if(stat(argc[2], &buff)){
+        std::cout<<"(False)"<<std::endl;
+        exit(2);
+      }
       if(S_ISREG(buff.st_mode)){
         std::cout<<"(True)"<<std::endl;
         exit(0);
@@ -107,7 +116,10 @@ void Command::run() {
       }
     }
     else if(std::string(argc[1]) == "-d"){
-      stat(argc[2], &buff);
+      if(stat(argc[2], &buff)){
+        std::cout<<"(False)"<<std::endl;
+        exit(2);
+      }
       if(S_ISDIR(buff.st_mode)){
         std::cout<<"(True)"<<std::endl;
         exit(0);
